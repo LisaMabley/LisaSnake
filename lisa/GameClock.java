@@ -1,4 +1,4 @@
-package com.clara;
+package lisa;
 
 import java.util.TimerTask;
 
@@ -24,32 +24,34 @@ public class GameClock extends TimerTask {
 
 		switch (stage) {
 			case SnakeGame.BEFORE_GAME: {
-				//don't do anything, waiting for user to press a key to start
+				// Don't do anything, waiting for user to press a key to start
 				break;
 			}
+
 			case SnakeGame.DURING_GAME: {
-				//
+
 				snake.moveSnake();
-				if (snake.didEatKibble(kibble) == true) {		
-					//tell kibble to update
-					kibble.moveKibble(snake);
+				if (snake.didEatKibble(kibble) == true) {
+					if (SnakeGame.getGameStage() != SnakeGame.GAME_WON) { // LISA ADDED TO CORRECT GAME WON BUG
+						// Tell kibble to update
+						kibble.moveKibble(snake);
+					}
 					Score.increaseScore();
 				}
 				break;
 			}
+
 			case SnakeGame.GAME_OVER: {
 				this.cancel();		//Stop the Timer	
 				break;	
 			}
+
 			case SnakeGame.GAME_WON: {
 				this.cancel();   //stop timer
 				break;
 			}
-			
-		
 		}
 				
 		gamePanel.repaint();		//In every circumstance, must update screen
-		
 	}
 }

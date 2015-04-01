@@ -1,13 +1,9 @@
-package com.clara;
-
-/** Keeps track of, and display the user's score
- * 
- */
-
+package lisa;
 
 public class Score {
+    // Keeps track of, and display the user's score
 
-	protected static int score;
+    protected static int score;
 	protected static int highScore = 0;
 	protected static int increment;
 	
@@ -22,9 +18,7 @@ public class Score {
 	}
 	
 	public static void increaseScore() {
-		
 		score = score + increment;
-		
 	}
 	
 	public int getScore(){
@@ -33,15 +27,16 @@ public class Score {
 	
 	//Checks if current score is greater than the current high score. 
 	//updates high score and returns true if so.
-	
-	public boolean gameOver(){
-		
-		if (score > highScore) {
-			highScore = score;
-			return true;
-		}
-		return false;
-	}
+
+	// WAS UNUSED LISA COMMENTED OUT
+//	public boolean gameOver(){
+//
+//		if (score > highScore) {
+//			highScore = score;
+//			return true;
+//		}
+//		return false;
+//	}
 
 	//These methods are useful for displaying score at the end of the game
 	
@@ -54,6 +49,7 @@ public class Score {
 		if (score > highScore) {
 			highScore = score;
 			return "New High Score!!";
+
 		} else {
 			return "";
 	}

@@ -1,25 +1,28 @@
-package com.clara;
+package lisa;
 
 import java.util.Timer;
 
 import javax.swing.*;
 
-
 public class SnakeGame {
 
-	public final static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
-	public final static int yPixelMaxDimension = 501;
+	public static int xPixelMaxDimension = 301;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
+	public static int yPixelMaxDimension = 301;
 
-	public static int xSquares ;
-	public static int ySquares ;
+	public static int xSquares;
+	public static int ySquares;
 
 	public final static int squareSize = 50;
 
-	protected static Snake snake ;
+	protected static Snake snake;
 
 	protected static Kibble kibble;
 
 	protected static Score score;
+
+	// User options
+	public static boolean warpWallsOn = true;
+	public static boolean mazesOn = false;
 
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
@@ -27,9 +30,9 @@ public class SnakeGame {
 	static final int GAME_WON = 4;   //The values are not important. The important thing is to use the constants 
 	//instead of the values so you are clear what you are setting. Easy to forget what number is Game over vs. game won
 	//Using constant names instead makes it easier to keep it straight. Refer to these variables 
-	//using statements such as SnakeGame.GAME_OVER 
+	//using statements such as lisa.SnakeGame.GAME_OVER
 
-	private static int gameStage = BEFORE_GAME;  //use this to figure out what should be happening. 
+	private static int gameStage = BEFORE_GAME;  // Use this to figure out what should be happening.
 	//Other classes like Snake and DrawSnakeGamePanel will need to query this, and change it's value
 
 	protected static long clockInterval = 500; //controls game speed
@@ -44,6 +47,9 @@ public class SnakeGame {
 	//http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
 
 	private static void createAndShowGUI() {
+		// Create and set up Snake II window
+//		GameOptionsGUI optionsGUI = new GameOptionsGUI(xPixelMaxDimension, yPixelMaxDimension);
+
 		//Create and set up the window.
 		snakeFrame = new JFrame();
 		snakeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,14 +106,21 @@ public class SnakeGame {
 		return gameStage;
 	}
 
-	public static boolean gameEnded() {
-		if (gameStage == GAME_OVER || gameStage == GAME_WON){
-			return true;
-		}
-		return false;
-	}
+	// WAS UNUSED LISA COMMENTED OUT
+//	public static boolean gameEnded() {
+//		if (gameStage == GAME_OVER || gameStage == GAME_WON){
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public static void setGameStage(int gameStage) {
 		SnakeGame.gameStage = gameStage;
+	}
+
+	// LISA ADDED
+	public static void setGridSize(int pixels) {
+		xPixelMaxDimension = pixels;
+		yPixelMaxDimension = pixels;
 	}
 }

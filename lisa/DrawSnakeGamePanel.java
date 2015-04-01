@@ -1,4 +1,6 @@
-package com.clara;
+package lisa;
+
+import lisa.Kibble;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -10,6 +12,7 @@ import javax.swing.JPanel;
  * @author Clara
  *
  */
+
 public class DrawSnakeGamePanel extends JPanel {
 	
 	private static int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
@@ -41,34 +44,31 @@ public class DrawSnakeGamePanel extends JPanel {
         gameStage = SnakeGame.getGameStage();
         
         switch (gameStage) {
-        case 1: {
-        	displayInstructions(g);
-        	break;
-        } 
-        case 2 : {
-        	displayGame(g);
-        	break;
+            case 1: {
+                displayInstructions(g);
+                break;
+            }
+            case 2 : {
+                displayGame(g);
+                break;
+            }
+            case 3: {
+                displayGameOver(g);
+                break;
+            }
+            case 4: {
+                displayGameWon(g);
+                break;
+            }
         }
-        case 3: {
-        	displayGameOver(g);
-        	break;
-        }
-        case 4: {
-        	displayGameWon(g);
-        	break;
-        }
-        }
-        
-        
-        
     }
 
 	private void displayGameWon(Graphics g) {
 		// TODO Replace this with something really special!
 		g.clearRect(100,100,350,350);
 		g.drawString("YOU WON SNAKE!!!", 150, 150);
-		
 	}
+
 	private void displayGameOver(Graphics g) {
 
 		g.clearRect(100,100,350,350);
@@ -84,8 +84,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		g.drawString(newHighScore, 150, 400);
 		
 		g.drawString("press a key to play again", 150, 350);
-		g.drawString("Press q to quit the game",150,400);		
-    			
+		g.drawString("Press q to quit the game",150,400);
 	}
 
 	private void displayGame(Graphics g) {
@@ -123,7 +122,6 @@ public class DrawSnakeGamePanel extends JPanel {
 		int y = kibble.getKibbleY() * SnakeGame.squareSize;
 
 		g.fillRect(x+1, y+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
-		
 	}
 
 	private void displaySnake(Graphics g) {
@@ -140,14 +138,11 @@ public class DrawSnakeGamePanel extends JPanel {
 		for (Point p : coordinates) {
 			g.fillRect((int)p.getX(), (int)p.getY(), SnakeGame.squareSize, SnakeGame.squareSize);
 		}
-
 	}
 
 	private void displayInstructions(Graphics g) {
-        g.drawString("Press any key to begin!",100,200);		
-        g.drawString("Press q to quit the game",100,300);		
+        g.drawString("Press any key to begin!", 100, 200);
+        g.drawString("Press q to quit the game", 100, 300);
     	}
-	
-    
 }
 
