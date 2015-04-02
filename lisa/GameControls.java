@@ -24,13 +24,13 @@ public class GameControls implements KeyListener{
 		
 		DrawSnakeGamePanel panel = (DrawSnakeGamePanel)ev.getComponent();
 
-		if (SnakeGame.getGameStage() == SnakeGame.BEFORE_GAME){
-			//Start the game
-			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
-			SnakeGame.newGame();
-			panel.repaint();
-			return;
-		}
+//		if (SnakeGame.getGameStage() == SnakeGame.BEFORE_GAME){
+//			//Start the game
+//			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
+//			SnakeGame.newGame();
+//			panel.repaint();
+//			return;
+//		}
 		
 		if (SnakeGame.getGameStage() == SnakeGame.GAME_OVER){
 			snake.reset();

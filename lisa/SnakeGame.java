@@ -9,8 +9,8 @@ import java.net.URL;
 
 public class SnakeGame {
 
-	public static int xPixelMaxDimension = 301;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
-	public static int yPixelMaxDimension = 301;
+	public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
+	public static int yPixelMaxDimension = 501;
 
 	public static int xSquares;
 	public static int ySquares;
@@ -26,7 +26,7 @@ public class SnakeGame {
 	// User options
 	public static boolean warpWallsOn = false;
 	public static boolean mazesOn = false;
-	public static boolean soundsOn = false;
+	public static boolean soundsOn = true;
 
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
@@ -57,9 +57,6 @@ public class SnakeGame {
 	private static AudioClip wonGameSound;
 
 	private static void createAndShowGUI() {
-		// Create and set up Snake II window
-//		GameOptionsGUI optionsGUI = new GameOptionsGUI(xPixelMaxDimension, yPixelMaxDimension);
-
 		//Create and set up the window.
 		snakeFrame = new JFrame();
 		snakeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,6 +66,9 @@ public class SnakeGame {
 		snakeFrame.setVisible(true);
 		snakeFrame.setResizable(false);
 
+//		GameOptionsGUI optionsPanel = new GameOptionsGUI();
+//		snakeFrame.add(optionsPanel);
+
 		snakePanel = new DrawSnakeGamePanel(snake, kibble, score);
 		snakePanel.setFocusable(true);
 		snakePanel.requestFocusInWindow(); //required to give this component the focus so it can generate KeyEvents
@@ -77,7 +77,6 @@ public class SnakeGame {
 		snakePanel.addKeyListener(new GameControls(snake));
 
 		setGameStage(BEFORE_GAME);
-
 		snakeFrame.setVisible(true);
 	}
 
@@ -93,17 +92,18 @@ public class SnakeGame {
 		gameStage = BEFORE_GAME;
 
 		try {
-
-			URL kibbleSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/kibble.wav");
-			URL warpWallSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/warp.wav");
-			URL loseGameSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/lostgame.wav");
-			URL wonGameSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/wongame.wav");
+			// Create game sounds
+			URL kibbleSoundUrl = new URL("https://raw.githubusercontent.com/LisaMabley/LisaSnake/master/kibble.wav");
+			URL warpWallSoundUrl = new URL("https://raw.githubusercontent.com/LisaMabley/LisaSnake/master/warp.wav");
+			URL loseGameSoundUrl = new URL("https://raw.githubusercontent.com/LisaMabley/LisaSnake/master/lostgame.wav");
+			URL wonGameSoundUrl = new URL("https://raw.githubusercontent.com/LisaMabley/LisaSnake/master/wongame.wav");
 			eatKibbleSound = Applet.newAudioClip(kibbleSoundUrl);
 			warpWallSound = Applet.newAudioClip(warpWallSoundUrl);
 			loseGameSound = Applet.newAudioClip(loseGameSoundUrl);
 			wonGameSound = Applet.newAudioClip(wonGameSoundUrl);
 
 		} catch (MalformedURLException e) {
+			// Those urls are fine ... but required to have this
 			System.out.println("Bad URL");
 			System.out.println(e.getStackTrace());
 		}
@@ -153,9 +153,21 @@ public class SnakeGame {
 		}
 	}
 
-	// LISA ADDED
+	// Setters for User Options LISA ADDED
 	public static void setGridSize(int pixels) {
 		xPixelMaxDimension = pixels;
 		yPixelMaxDimension = pixels;
+	}
+
+	public static void setSoundsOn(boolean soundsOn) {
+		SnakeGame.soundsOn = soundsOn;
+	}
+
+	public static void setWarpWallsOn(boolean warpWallsOn) {
+		SnakeGame.warpWallsOn = warpWallsOn;
+	}
+
+	public static void setMazesOn(boolean mazesOn) {
+		SnakeGame.mazesOn = mazesOn;
 	}
 }

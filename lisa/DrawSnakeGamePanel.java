@@ -45,7 +45,7 @@ public class DrawSnakeGamePanel extends JPanel {
         
         switch (gameStage) {
             case 1: {
-                displayInstructions(g);
+                displayGameOptions(g);
                 break;
             }
             case 2 : {
@@ -65,7 +65,7 @@ public class DrawSnakeGamePanel extends JPanel {
 
 	private void displayGameWon(Graphics g) {
 		// TODO Replace this with something really special!
-		g.clearRect(100,100,350,350);
+		g.clearRect(100, 100, 350, 350);
 		g.drawString("YOU WON SNAKE!!!", 150, 150);
 	}
 
@@ -116,7 +116,7 @@ public class DrawSnakeGamePanel extends JPanel {
 	private void displayKibble(Graphics g) {
 
 		//Draw the kibble in green
-		g.setColor(Color.GREEN);
+		g.setColor(Color.ORANGE);
 
 		int x = kibble.getKibbleX() * SnakeGame.squareSize;
 		int y = kibble.getKibbleY() * SnakeGame.squareSize;
@@ -129,20 +129,25 @@ public class DrawSnakeGamePanel extends JPanel {
 		LinkedList<Point> coordinates = snake.segmentsToDraw();
 		
 		//Draw head in grey
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.DARK_GRAY);
 		Point head = coordinates.pop();
 		g.fillRect((int)head.getX(), (int)head.getY(), SnakeGame.squareSize, SnakeGame.squareSize);
 		
 		//Draw rest of snake in black
-		g.setColor(Color.BLACK);
+		g.setColor(Color.GREEN);
 		for (Point p : coordinates) {
 			g.fillRect((int)p.getX(), (int)p.getY(), SnakeGame.squareSize, SnakeGame.squareSize);
 		}
 	}
 
-	private void displayInstructions(Graphics g) {
-        g.drawString("Press any key to begin!", 100, 200);
-        g.drawString("Press q to quit the game", 100, 300);
-    	}
+//	private void displayInstructions(Graphics g) {
+//        g.drawString("Press any key to begin!", 100, 200);
+//        g.drawString("Press q to quit the game", 100, 300);
+//    	}
+
+	private void displayGameOptions(Graphics g) {
+		// Create and set up options GUI
+		GameOptionsGUI optionsGUI = new GameOptionsGUI();
+	}
 }
 
