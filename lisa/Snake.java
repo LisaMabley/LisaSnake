@@ -189,7 +189,7 @@ public class Snake {
 				if (SnakeGame.soundsOn) {
 					SnakeGame.warpWallSound.play();
 				}
-				
+
 				// No problem if warp walls are on
 				if (snakeHeadX >= maxX) {
 					snakeHeadX = 0;
