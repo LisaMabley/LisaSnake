@@ -1,8 +1,11 @@
 package lisa;
 
+import java.net.MalformedURLException;
 import java.util.Timer;
-
 import javax.swing.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.URL;
 
 public class SnakeGame {
 
@@ -21,8 +24,9 @@ public class SnakeGame {
 	protected static Score score;
 
 	// User options
-	public static boolean warpWallsOn = true;
+	public static boolean warpWallsOn = false;
 	public static boolean mazesOn = false;
+	public static boolean soundsOn = false;
 
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
@@ -45,6 +49,12 @@ public class SnakeGame {
 	//Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
 	//http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
 	//http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
+
+//	 Game sounds to be accessible from any class
+	public static AudioClip eatKibbleSound;
+	public static AudioClip warpWallSound;
+	private static AudioClip loseGameSound;
+	private static AudioClip wonGameSound;
 
 	private static void createAndShowGUI() {
 		// Create and set up Snake II window
@@ -81,6 +91,22 @@ public class SnakeGame {
 		score = new Score();
 
 		gameStage = BEFORE_GAME;
+
+		try {
+
+			URL kibbleSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/kibble.wav");
+			URL warpWallSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/warp.wav");
+			URL loseGameSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/lostgame.wav");
+			URL wonGameSoundUrl = new URL("file:/Users/lisa/IdeaProjects/Snake/wongame.wav");
+			eatKibbleSound = Applet.newAudioClip(kibbleSoundUrl);
+			warpWallSound = Applet.newAudioClip(warpWallSoundUrl);
+			loseGameSound = Applet.newAudioClip(loseGameSoundUrl);
+			wonGameSound = Applet.newAudioClip(wonGameSoundUrl);
+
+		} catch (MalformedURLException e) {
+			System.out.println("Bad URL");
+			System.out.println(e.getStackTrace());
+		}
 	}
 
 	protected static void newGame() {
@@ -100,8 +126,6 @@ public class SnakeGame {
 		});
 	}
 
-
-
 	public static int getGameStage() {
 		return gameStage;
 	}
@@ -116,6 +140,17 @@ public class SnakeGame {
 
 	public static void setGameStage(int gameStage) {
 		SnakeGame.gameStage = gameStage;
+
+		if (soundsOn) {
+			switch (gameStage) {
+				case 3:
+					loseGameSound.play();
+					break;
+				case 4:
+					wonGameSound.play();
+					break;
+			}
+		}
 	}
 
 	// LISA ADDED

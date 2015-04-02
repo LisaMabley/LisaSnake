@@ -186,6 +186,10 @@ public class Snake {
 		// Does this make snake hit the wall?
 		if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0 ) {
 			if (SnakeGame.warpWallsOn) {
+				if (SnakeGame.soundsOn) {
+					SnakeGame.warpWallSound.play();
+				}
+				
 				// No problem if warp walls are on
 				if (snakeHeadX >= maxX) {
 					snakeHeadX = 0;
@@ -211,7 +215,6 @@ public class Snake {
 		//Does this make the snake eat its tail?
 		if (snakeSquares[snakeHeadX][snakeHeadY] != 0) {
 
-			System.out.println("Ate tail");
 			ateTail = true;
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return;
@@ -219,7 +222,6 @@ public class Snake {
 
 		//Otherwise, game is still on. Add new head
 		snakeSquares[snakeHeadX][snakeHeadY] = 1;
-		System.out.println("Adding new head");
 
 		//If snake did not just eat, then remove tail segment
 		//to keep snake the same length.
@@ -263,6 +265,9 @@ public class Snake {
 		//Is this kibble in the snake? It should be in the same square as the snake's head
 		if (kibble.getKibbleX() == snakeHeadX && kibble.getKibbleY() == snakeHeadY){
 			justAteMustGrowThisMuch += growthIncrement;
+			if (SnakeGame.soundsOn) {
+				SnakeGame.eatKibbleSound.play();
+			}
 
 			// LISA ADDED TO CORRECT WON GAME BUG
 			if (wonGame()) {
