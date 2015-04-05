@@ -9,8 +9,8 @@ import java.net.URL;
 
 public class SnakeGame {
 
-	public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
-	public static int yPixelMaxDimension = 501;
+	public static int xPixelMaxDimension = 701;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
+	public static int yPixelMaxDimension = 701;
 
 	public static int xSquares;
 	public static int ySquares;
@@ -24,10 +24,11 @@ public class SnakeGame {
 	protected static Score score;
 
 	// User options
-	public static boolean warpWallsOn = false;
+	public static boolean warpWallsOn = true;
 	public static boolean mazesOn = false;
 	public static boolean soundsOn = true;
 
+	static final int GAME_PAUSED = 0;
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
 	static final int GAME_OVER = 3;
@@ -110,6 +111,12 @@ public class SnakeGame {
 	}
 
 	protected static void newGame() {
+		Timer timer = new Timer();
+		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel);
+		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
+	}
+
+	public static void resumePausedGame() {
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);

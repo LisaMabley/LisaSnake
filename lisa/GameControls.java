@@ -19,7 +19,7 @@ public class GameControls implements KeyListener{
 		//is game running? No? tell the game to draw grid, start, etc.
 		
 		//Get the component which generated this event
-		//Hopefully, a lisa.DrawSnakeGamePanel object.
+		//Hopefully, a DrawSnakeGamePanel object.
 		//It would be a good idea to catch a ClassCastException here. 
 		
 		DrawSnakeGamePanel panel = (DrawSnakeGamePanel)ev.getComponent();
@@ -71,8 +71,17 @@ public class GameControls implements KeyListener{
 		//keyTyped events are for user typing letters on the keyboard, anything that makes a character display on the screen
 		char keyPressed = ev.getKeyChar();
 		char q = 'q';
-		if( keyPressed == q){
+		char p = 'p';
+		char r = 'r';
+		if (keyPressed == q) {
 			System.exit(0);    //quit if user presses the q key.
+
+		} else if (keyPressed == p) {
+			SnakeGame.setGameStage(SnakeGame.GAME_PAUSED);
+
+		} else if (keyPressed == r) {
+			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
+			SnakeGame.resumePausedGame();
 		}
 	}
 }

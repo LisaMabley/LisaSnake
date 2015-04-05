@@ -52,7 +52,7 @@ public class Score {
 
 		} else {
 			return "";
-	}
+		}
 	}
 
 	public String getStringHighScore() {

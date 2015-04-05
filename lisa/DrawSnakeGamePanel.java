@@ -44,6 +44,11 @@ public class DrawSnakeGamePanel extends JPanel {
         gameStage = SnakeGame.getGameStage();
         
         switch (gameStage) {
+			case 0: {
+				displayUnpauseInstructions(g);
+				break;
+			}
+
             case 1: {
                 displayGameOptions(g);
                 break;
@@ -101,7 +106,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		
 		g.clearRect(0, 0, maxX, maxY);
 
-		g.setColor(Color.RED);
+		g.setColor(Color.LIGHT_GRAY);
 
 		//Draw grid - horizontal lines
 		for (int y=0; y <= maxY ; y+= squareSize){			
@@ -148,6 +153,12 @@ public class DrawSnakeGamePanel extends JPanel {
 	private void displayGameOptions(Graphics g) {
 		// Create and set up options GUI
 		GameOptionsGUI optionsGUI = new GameOptionsGUI();
+	}
+
+	private void displayUnpauseInstructions(Graphics g) {
+		// Display instructions for restarting paused game
+		g.drawString("GAME PAUSED", 300, 300);
+		g.drawString("Press R to resume", 300, 400);
 	}
 }
 
