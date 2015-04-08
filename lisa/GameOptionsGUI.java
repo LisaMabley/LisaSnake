@@ -8,31 +8,27 @@ import java.awt.event.ItemListener;
 
 // Created by lisa on 3/30/15.
 
-public class GameOptionsGUI extends JFrame {
-    private JPanel rootPanel;
+public class GameOptionsGUI {
+    public JPanel rootPanel;
     private JButton playButton;
     private JButton quitButton;
     private JLabel sizeLabel;
     private JComboBox sizeComboBox;
     private JCheckBox soundEffectsOnCheckBox;
     private JCheckBox warpWallsOnCheckBox;
-    private JCheckBox obstaclesOnCheckBox;
-    private JCheckBox preyOnCheckBox;
+    private JCheckBox avocadosOnCheckBox;
+    private JCheckBox rodentOnCheckBox;
     private JLabel titleLabel;
     private JComboBox speedComboBox;
+    private JCheckBox rodentsOnCheckBox;
 
     // Constructor
     public GameOptionsGUI() {
-        setContentPane(rootPanel);
-        pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setSize(501, 501);
 
         // Set options for size ComboBox
-        final String small = "6 x 6";
-        final String medium = "10 x 10";
-        final String large = "14 x 14";
+        final String small = "8 x 8";
+        final String medium = "12 x 12";
+        final String large = "16 x 16";
         sizeComboBox.addItem(small);
         sizeComboBox.addItem(medium);
         sizeComboBox.addItem(large);
@@ -47,16 +43,30 @@ public class GameOptionsGUI extends JFrame {
         speedComboBox.addItem(f);
         sizeComboBox.setSelectedItem(medium);
 
+        speedComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                String speed = speedComboBox.getSelectedItem().toString();
+                if (speed.equals(s)) {
+                    SnakeGame.setGameSpeed(500);
+                } else if (speed.equals(m)) {
+                    SnakeGame.setGameSpeed(300);
+                } else if (speed.equals(f)) {
+                    SnakeGame.setGameSpeed(100);
+                }
+            }
+        });
+
         sizeComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 String size = sizeComboBox.getSelectedItem().toString();
                 if (size.equals(small)) {
-                    SnakeGame.setGridSize(301);
+                    SnakeGame.setGridSize(401);
                 } else if (size.equals(medium)) {
-                    SnakeGame.setGridSize(501);
+                    SnakeGame.setGridSize(601);
                 } else if (size.equals(large)) {
-                    SnakeGame.setGridSize(701);
+                    SnakeGame.setGridSize(801);
                 }
             }
         });
@@ -83,6 +93,28 @@ public class GameOptionsGUI extends JFrame {
             }
         });
 
+        avocadosOnCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (avocadosOnCheckBox.isSelected()) {
+                    SnakeGame.setObstaclesOn(true);
+                } else {
+                    SnakeGame.setObstaclesOn(false);
+                }
+            }
+        });
+
+        rodentsOnCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (rodentsOnCheckBox.isSelected()) {
+                    SnakeGame.setPreyOn(true);
+                } else {
+                    SnakeGame.setPreyOn(false);
+                }
+            }
+        });
+
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,9 +125,7 @@ public class GameOptionsGUI extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SnakeGame.setGameStage(SnakeGame.DURING_GAME);
-                SnakeGame.newGame();
-                dispose();
+                SnakeGame.displayGameGrid();
             }
         });
     }

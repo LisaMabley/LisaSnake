@@ -6,13 +6,13 @@ import javax.swing.*;
 public class SnakeGame {
 
 	// Number of pixels in window.
-	public static int xPixelMaxDimension = 401;
-	public static int yPixelMaxDimension = 401;
+	public static int xPixelMaxDimension = 601;
+	public static int yPixelMaxDimension = 601;
 
 	public static int xSquares;
 	public static int ySquares;
 
-	public final static int squareSize = 40;
+	public final static int squareSize = 50;
 
 	protected static GridSquares gridSquares;
 	protected static Snake snake;
@@ -20,9 +20,9 @@ public class SnakeGame {
 	protected static FoodManager foodManager;
 
 	// User options
-	public static boolean warpWallsOn = false;
-	public static boolean obstaclesOn = true;
 	public static boolean soundsOn = true;
+	public static boolean warpWallsOn = false;
+	public static boolean obstaclesOn = false;
 	public static boolean preyOn = false;
 
 	static final int GAME_PAUSED = 0;
@@ -47,6 +47,7 @@ public class SnakeGame {
 
 	static JFrame snakeFrame;
 	static DrawSnakeGamePanel snakePanel;
+	static JPanel optionsPanel;
 	//Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
 	//http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
 	//http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
@@ -57,49 +58,55 @@ public class SnakeGame {
 		//Create and set up the window.
 		snakeFrame = new JFrame();
 		snakeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
 		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
 		snakeFrame.setUndecorated(true); //hide title bar
-		snakeFrame.setVisible(true);
 		snakeFrame.setResizable(false);
+		snakeFrame.setFocusable(true);
+		snakeFrame.addKeyListener(new GameControls(snake));
 
-//		GameOptionsGUI optionsPanel = new GameOptionsGUI();
-//		snakeFrame.add(optionsPanel);
+		// Show options GUI
+		GameOptionsGUI optionsFormGUI = new GameOptionsGUI();
+		optionsPanel = optionsFormGUI.rootPanel;
+		optionsPanel.setFocusable(true);
+		optionsPanel.requestFocusInWindow();
+		snakeFrame.add(optionsPanel);
 
-		snakePanel = new DrawSnakeGamePanel(snake, score);
-
-		snakePanel.setFocusable(true);
-		snakePanel.requestFocusInWindow(); //required to give this component the focus so it can generate KeyEvents
-
-		snakeFrame.add(snakePanel);
-		snakePanel.addKeyListener(new GameControls(snake));
-
-		setGameStage(BEFORE_GAME);
 		snakeFrame.setVisible(true);
 	}
 
-	private static void initializeGame() {
-		//set up score, snake and grid
+	protected static void displayGameGrid() {
+		snakeFrame.remove(optionsPanel);
+		snakePanel = new DrawSnakeGamePanel(snake, score);
+		snakeFrame.add(snakePanel);
+		snakeFrame.setFocusable(true);
+		snakeFrame.addKeyListener(new GameControls(snake));
+		snakeFrame.validate();
+		snakeFrame.repaint();
+
+		newGame();
+	}
+
+	private static void initializeGameBoard() {
+		// Set up snake and grid
+		// Called by OptionsGUI when player changes grid size
 		xSquares = xPixelMaxDimension / squareSize;
 		ySquares = yPixelMaxDimension / squareSize;
 		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
-
-		soundPlayer = new SoundPlayer();
-
 		snake = new Snake();
+	}
+
+	private static void initializeSettings() {
+		soundPlayer = new SoundPlayer();
 		score = new Score();
 		foodManager = new FoodManager(snake);
-
-		gameStage = BEFORE_GAME;
 	}
 
 	protected static void newGame() {
+		gameStage = DURING_GAME;
 		Timer timer = new Timer();
-		GameClock clockTick;
-
-		clockTick = new GameClock(snake, score, snakePanel);
-
+		GameClock clockTick = new GameClock(snake, score, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
+		snakePanel.repaint();
 	}
 
 	public static void resumePausedGame() {
@@ -113,7 +120,8 @@ public class SnakeGame {
 		//creating and showing this application's GUI.
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				initializeGame();
+				initializeGameBoard();
+				initializeSettings();
 				createAndShowGUI();
 			}
 		});
@@ -144,9 +152,15 @@ public class SnakeGame {
 	}
 
 	// Getters & Setters for User Options
+	public static void setGameSpeed(int millisecondsPerTick) {
+		clockInterval = millisecondsPerTick;
+	}
+
 	public static void setGridSize(int pixels) {
 		xPixelMaxDimension = pixels;
 		yPixelMaxDimension = pixels;
+		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
+		initializeGameBoard();
 	}
 
 	public static void setSoundsOn(boolean soundsOn) { SnakeGame.soundsOn = soundsOn; }

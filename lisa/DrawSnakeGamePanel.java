@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class DrawSnakeGamePanel extends JPanel {
 	
-	private int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
+	private int gameStage;  //use this to figure out what to paint
 	
 	private Snake snake;
 	private Score score;
@@ -40,24 +40,19 @@ public class DrawSnakeGamePanel extends JPanel {
         gameStage = SnakeGame.getGameStage();
         
         switch (gameStage) {
-			case 0: {
+			case SnakeGame.GAME_PAUSED: {
 				displayUnpauseInstructions(g);
 				break;
 			}
-
-            case 1: {
-                displayGameOptions(g);
-                break;
-            }
-            case 2 : {
+            case SnakeGame.DURING_GAME: {
                 displayGame(g);
                 break;
             }
-            case 3: {
+            case SnakeGame.GAME_OVER: {
                 displayGameOver(g);
                 break;
             }
-            case 4: {
+            case SnakeGame.GAME_WON: {
                 displayGameWon(g);
                 break;
             }
@@ -121,14 +116,14 @@ public class DrawSnakeGamePanel extends JPanel {
 		graphics.setColor(FoodManager.kibble.displayColor);
 		int kibbleX = FoodManager.kibble.getFoodX() * SnakeGame.squareSize;
 		int kibbleY = FoodManager.kibble.getFoodY() * SnakeGame.squareSize;
-		graphics.fillRect(kibbleX+1, kibbleY+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
+		graphics.fillRect(kibbleX+1, kibbleY+1, SnakeGame.squareSize-1, SnakeGame.squareSize-1);
 
 		// If prey option is on, draw prey
 		if (SnakeGame.preyOn) {
 			graphics.setColor(FoodManager.prey.displayColor);
 			int preyX = FoodManager.prey.getFoodX() * SnakeGame.squareSize;
 			int preyY = FoodManager.prey.getFoodY() * SnakeGame.squareSize;
-			graphics.fillRect(preyX+1, preyY+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
+			graphics.fillRect(preyX+1, preyY+1, SnakeGame.squareSize-1, SnakeGame.squareSize-1);
 		}
 
 		// If obstacle option is on, draw avocados
@@ -137,7 +132,7 @@ public class DrawSnakeGamePanel extends JPanel {
 				int avocadoX = avocado.getFoodX() * SnakeGame.squareSize;
 				int avocadoY = avocado.getFoodY() * SnakeGame.squareSize;
 				graphics.setColor(avocado.displayColor);
-				graphics.fillRect(avocadoX+1, avocadoY+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
+				graphics.fillRect(avocadoX+1, avocadoY+1, SnakeGame.squareSize-1, SnakeGame.squareSize-1);
 			}
 		}
 	}
@@ -156,13 +151,6 @@ public class DrawSnakeGamePanel extends JPanel {
 		for (Point p : coordinates) {
 			g.fillRect((int)p.getX(), (int)p.getY(), SnakeGame.squareSize, SnakeGame.squareSize);
 		}
-	}
-
-	private void displayGameOptions(Graphics g) {
-		// Create and set up options GUI
-		// TODO Display this in same JFrame as game!!
-
-		GameOptionsGUI optionsGUI = new GameOptionsGUI();
 	}
 
 	private void displayUnpauseInstructions(Graphics g) {
