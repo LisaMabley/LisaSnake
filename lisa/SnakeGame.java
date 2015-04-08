@@ -93,12 +93,12 @@ public class SnakeGame {
 		ySquares = yPixelMaxDimension / squareSize;
 		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
 		snake = new Snake();
+		foodManager = new FoodManager(snake);
 	}
 
 	private static void initializeSettings() {
 		soundPlayer = new SoundPlayer();
 		score = new Score();
-		foodManager = new FoodManager(snake);
 	}
 
 	protected static void newGame() {

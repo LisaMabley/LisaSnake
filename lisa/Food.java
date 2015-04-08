@@ -21,16 +21,18 @@ public abstract class Food {
         // Place food in random empty square
         Random randomNumberGenerator = new Random();
 
-        boolean foundValidLocation = false;
-        while (!foundValidLocation) {
-            // Generate random location
-            foodX = randomNumberGenerator.nextInt(SnakeGame.xSquares);
-            foodY = randomNumberGenerator.nextInt(SnakeGame.ySquares);
+        if (SnakeGame.getGameStage() == SnakeGame.DURING_GAME) {
+            boolean foundValidLocation = false;
+            while (!foundValidLocation) {
+                // Generate random location
+                foodX = randomNumberGenerator.nextInt(SnakeGame.xSquares);
+                foodY = randomNumberGenerator.nextInt(SnakeGame.ySquares);
 
-            // Check if location is empty
-            if (FoodManager.isEmptySquare(foodX, foodY)) {
-                GridSquares.setSquare(foodX, foodY, GridSquares.CONTAINS_FOOD);
-                foundValidLocation = true;
+                // Check if location is empty
+                if (FoodManager.isEmptySquare(foodX, foodY)) {
+                    GridSquares.setSquare(foodX, foodY, GridSquares.CONTAINS_FOOD);
+                    foundValidLocation = true;
+                }
             }
         }
     }

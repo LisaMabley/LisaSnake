@@ -10,7 +10,6 @@ public class GridSquares {
     // Represent square content
     static final int EMPTY = 0;
     static final int CONTAINS_FOOD = -1;
-    static final int UNRIPE_AVOCADO = -2;
     // A 0 means there is nothing in this square
     // A positive number means part of the snake is in the square
     // The head of the snake is 1, rest of segments are numbered in order

@@ -75,11 +75,11 @@ public class FoodManager {
 
     private static boolean didSnakeEat(Food food) {
         //Is any food in the snake? It would be in the same square as the snake's head
-        if (snake.isSnakeHead(food.foodX, food.foodY)){
+        if (snake.isSnakeHead(food.foodX, food.foodY)) {
             SoundPlayer.playEatSound();
 
             if (GridSquares.wonGame()) {
-                System.out.println("Won game!");
+                SnakeGame.setGameStage(SnakeGame.GAME_WON);
             }
 
             return true;
