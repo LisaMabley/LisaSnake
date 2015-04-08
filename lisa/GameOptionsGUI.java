@@ -16,8 +16,8 @@ public class GameOptionsGUI extends JFrame {
     private JComboBox sizeComboBox;
     private JCheckBox soundEffectsOnCheckBox;
     private JCheckBox warpWallsOnCheckBox;
-    private JCheckBox mazesOnCheckBox;
-    private JCheckBox optionOnCheckBox;
+    private JCheckBox obstaclesOnCheckBox;
+    private JCheckBox preyOnCheckBox;
     private JLabel titleLabel;
     private JComboBox speedComboBox;
 
@@ -32,7 +32,7 @@ public class GameOptionsGUI extends JFrame {
         // Set options for size ComboBox
         final String small = "6 x 6";
         final String medium = "10 x 10";
-        final String large = "16 x 16";
+        final String large = "14 x 14";
         sizeComboBox.addItem(small);
         sizeComboBox.addItem(medium);
         sizeComboBox.addItem(large);
@@ -42,11 +42,9 @@ public class GameOptionsGUI extends JFrame {
         final String s = "slow";
         final String m = "medium";
         final String f = "fast";
-        final String l = "lightning fast";
         speedComboBox.addItem(s);
         speedComboBox.addItem(m);
         speedComboBox.addItem(f);
-        speedComboBox.addItem(l);
         sizeComboBox.setSelectedItem(medium);
 
         sizeComboBox.addItemListener(new ItemListener() {
@@ -58,7 +56,7 @@ public class GameOptionsGUI extends JFrame {
                 } else if (size.equals(medium)) {
                     SnakeGame.setGridSize(501);
                 } else if (size.equals(large)) {
-                    SnakeGame.setGridSize(801);
+                    SnakeGame.setGridSize(701);
                 }
             }
         });

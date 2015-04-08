@@ -1,7 +1,5 @@
 package lisa;
 
-import lisa.Kibble;
-
 import java.awt.Point;
 import java.util.LinkedList;
 
@@ -15,46 +13,26 @@ public class Snake {
 	private boolean hitWall = false;
 	private boolean ateTail = false;
 
-	// Initialize multidimensional array
-	private int snakeSquares[][];  //represents all of the squares on the screen
-	//NOT pixels!
-	//A 0 means there is no part of the snake in this square
-	//A non-zero number means part of the snake is in the square
-	//The head of the snake is 1, rest of segments are numbered in order
-
 	private int currentHeading;  //Direction snake is going in, or direction user is telling snake to go
 	private int lastHeading;    //Last confirmed movement of snake. See moveSnake method
 	
 	private int snakeSize;   //size of snake - how many segments?
 
-	private int growthIncrement = 2; //how many squares the snake grows after it eats a kibble
+	public int justAteMustGrowThisMuch = 0;
 
-	private int justAteMustGrowThisMuch = 0;
-
-	private int maxX, maxY, squareSize;  
 	private int snakeHeadX, snakeHeadY; //store coordinates of head - first segment
 
-	public Snake(int maxX, int maxY, int squareSize){
-		this.maxX = maxX;
-		this.maxY = maxY;
-		this.squareSize = squareSize;
-		//Create and fill snakeSquares with 0s 
-		snakeSquares = new int[maxX][maxY];
-		fillSnakeSquaresWithZeros();
+	public Snake(){
 		createStartSnake();
 	}
 
 	protected void createStartSnake(){
-		//snake starts as 3 horizontal squares in the center of the screen, moving left
-		int screenXCenter = (int) maxX/2;  //Cast just in case we have an odd number
-		int screenYCenter = (int) maxY/2;  //Cast just in case we have an odd number
+		// Snake starts as 3 horizontal squares in the center of the screen, moving left
 
-		snakeSquares[screenXCenter][screenYCenter] = 1;
-		snakeSquares[screenXCenter+1][screenYCenter] = 2;
-		snakeSquares[screenXCenter+2][screenYCenter] = 3;
+		GridSquares.startSnake();
 
-		snakeHeadX = screenXCenter;
-		snakeHeadY = screenYCenter;
+		snakeHeadX = GridSquares.screenXCenter;
+		snakeHeadY = GridSquares.screenYCenter;
 
 		snakeSize = 3;
 
@@ -64,25 +42,17 @@ public class Snake {
 		justAteMustGrowThisMuch = 0;
 	}
 
-	private void fillSnakeSquaresWithZeros() {
-		for (int x = 0; x < this.maxX; x++) {
-			for (int y = 0 ; y < this.maxY ; y++) {
-				snakeSquares[x][y] = 0;
-			}
-		}
-	}
-
 	public LinkedList<Point> segmentsToDraw(){
-		//Return a list of the actual x and y coordinates of the top left of each snake segment
-		//Useful for the Panel class to draw the snake
+		// Return a list of the actual x and y coordinates of the top left of each snake segment
+		// Useful for the Panel class to draw the snake
 		LinkedList<Point> segmentCoordinates = new LinkedList<Point>();
 		for (int segment = 1 ; segment <= snakeSize ; segment++ ) {
-			//search array for each segment number
-			for (int x = 0 ; x < maxX ; x++) {
-				for (int y = 0 ; y < maxY ; y++) {
-					if (snakeSquares[x][y] == segment){
+			// Search array for each segment number
+			for (int x = 0 ; x < GridSquares.maxX ; x++) {
+				for (int y = 0 ; y < GridSquares.maxY ; y++) {
+					if (GridSquares.grid[x][y] == segment){
 						//make a Point for this segment's coordinates and add to list
-						Point p = new Point(x * squareSize , y * squareSize);
+						Point p = new Point(x * GridSquares.getSquareSize() , y * GridSquares.getSquareSize());
 						segmentCoordinates.add(p);
 					}
 				}
@@ -108,11 +78,6 @@ public class Snake {
 		currentHeading = DIRECTION_RIGHT;
 	}
 
-//	public void	eatKibble(){
-//		//record how much snake needs to grow after eating food
-//		justAteMustGrowThisMuch += growthIncrement;
-//	}
-
 	protected void moveSnake(){
 		//Called every clock tick
 		
@@ -133,14 +98,14 @@ public class Snake {
 		}
 
 		// Did you eat your tail? Don't move.
-		if (ateTail == true) {
+		if (ateTail) {
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return;
 		}
 
 		// Did you hit a wall?
 		// If warp walls are off, game over.
-		if (hitWall == true && !SnakeGame.warpWallsOn) {
+		if (hitWall && !SnakeGame.warpWallsOn) {
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return;
 		}
@@ -157,10 +122,10 @@ public class Snake {
 		//Increase all snake segments by 1
 		//All non-zero elements of array represent a snake segment
 
-		for (int x = 0 ; x < maxX ; x++) {
-			for (int y = 0 ; y < maxY ; y++){
-				if (snakeSquares[x][y] != 0) {
-					snakeSquares[x][y]++;
+		for (int x = 0 ; x < GridSquares.maxX ; x++) {
+			for (int y = 0 ; y < GridSquares.maxY ; y++){
+				if (GridSquares.getSquareValue(x, y) != 0) {
+					GridSquares.incrementSquareValue(x, y);
 				}
 			}
 		}
@@ -184,24 +149,23 @@ public class Snake {
 		}
 
 		// Does this make snake hit the wall?
-		if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0 ) {
-			if (SnakeGame.warpWallsOn) {
-				if (SnakeGame.soundsOn) {
-					SnakeGame.warpWallSound.play();
-				}
+		if (snakeHeadX >= GridSquares.maxX || snakeHeadX < 0 || snakeHeadY >= GridSquares.maxY || snakeHeadY < 0 ) {
 
-				// No problem if warp walls are on
-				if (snakeHeadX >= maxX) {
+			// No problem if warp walls are on
+			if (SnakeGame.warpWallsOn) {
+				SoundPlayer.playWarpWallSound();
+
+				if (snakeHeadX >= GridSquares.maxX) {
 					snakeHeadX = 0;
 
 				} else if (snakeHeadX < 0) {
-					snakeHeadX = maxX - 1;
+					snakeHeadX = GridSquares.maxX - 1;
 
-				} else if (snakeHeadY >= maxY) {
+				} else if (snakeHeadY >= GridSquares.maxY) {
 					snakeHeadY = 0;
 
 				} else if (snakeHeadY < 0) {
-					snakeHeadY = maxY - 1;
+					snakeHeadY = GridSquares.maxY - 1;
 				}
 
 			} else {
@@ -213,7 +177,7 @@ public class Snake {
 		}
 
 		//Does this make the snake eat its tail?
-		if (snakeSquares[snakeHeadX][snakeHeadY] != 0) {
+		if (GridSquares.getSquareValue(snakeHeadX, snakeHeadY) != 0) {
 
 			ateTail = true;
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
@@ -221,17 +185,17 @@ public class Snake {
 		}
 
 		//Otherwise, game is still on. Add new head
-		snakeSquares[snakeHeadX][snakeHeadY] = 1;
+		GridSquares.setSquare(snakeHeadX, snakeHeadY, 1);
 
 		//If snake did not just eat, then remove tail segment
 		//to keep snake the same length.
 		//find highest number, which should now be the same as snakeSize+1, and set to 0
 		
 		if (justAteMustGrowThisMuch == 0) {
-			for (int x = 0 ; x < maxX ; x++) {
-				for (int y = 0 ; y < maxY ; y++){
-					if (snakeSquares[x][y] == snakeSize + 1) {
-						snakeSquares[x][y] = 0;
+			for (int x = 0 ; x < GridSquares.maxX ; x++) {
+				for (int y = 0 ; y < GridSquares.maxY ; y++){
+					if (GridSquares.getSquareValue(x, y) == snakeSize + 1) {
+						GridSquares.setSquare(x, y, 0);
 					}
 				}
 			}
@@ -246,83 +210,47 @@ public class Snake {
 		lastHeading = currentHeading; //Update last confirmed heading
 	}
 
-	protected boolean didHitWall(){
-		return hitWall;
+//	public boolean isSnakeSegment(int foodX, int foodY) {
+//		if ([foodX][foodY] == 0) {
+//			return false;
+//		}
+//		return true;
+//	}
+
+	public boolean isSnakeHead(int X, int Y) {
+		return snakeHeadX == X && snakeHeadY == Y;
 	}
 
-	protected boolean didEatTail(){
-		return ateTail;
-	}
-
-	public boolean isSnakeSegment(int kibbleX, int kibbleY) {
-		if (snakeSquares[kibbleX][kibbleY] == 0) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean didEatKibble(Kibble kibble) {
-		//Is this kibble in the snake? It should be in the same square as the snake's head
-		if (kibble.getKibbleX() == snakeHeadX && kibble.getKibbleY() == snakeHeadY){
-			justAteMustGrowThisMuch += growthIncrement;
-			if (SnakeGame.soundsOn) {
-				SnakeGame.eatKibbleSound.play();
-			}
-
-			// LISA ADDED TO CORRECT WON GAME BUG
-			if (wonGame()) {
-				System.out.println("Won game!");
-				SnakeGame.setGameStage(SnakeGame.GAME_WON);
-			}
-
-			return true;
-		}
-		return false;
-	}
+//	public boolean isAdjacentToSnakeHead(int preyX, int preyY) {
+//
+//		int preyColumn = preyX %10;
+//		int snakeHeadColumn = snakeHeadX %10;
+//		if ((snakeHeadColumn == preyColumn || Math.abs(snakeHeadColumn - preyColumn) == 1) &&
+//				(snakeHeadY == preyY || Math.abs(snakeHeadY - preyY) == 1)) {
+//			return true;
+//
+//		} else {
+//			return false;
+//		}
+//	}
 
 	public String toString(){
-		String textsnake = "";
-		//This looks the wrong way around. Actually need to do it this way or snake is drawn flipped 90 degrees. 
-		for (int y = 0 ; y < maxY ; y++) {
-			for (int x = 0 ; x < maxX ; x++){
-				textsnake = textsnake + snakeSquares[x][y];
-			}
-			textsnake += "\n";
-		}
-		return textsnake;
-	}
+		String textSnake = "";
 
-	public boolean wonGame() {
-		//If all of the squares have snake segments in, the snake has eaten so much kibble 
-		//that it has filled the screen. Win!
-		for (int x = 0 ; x < maxX ; x++) {
-			for (int y = 0 ; y < maxY ; y++){
-				if (snakeSquares[x][y] == 0) {
-					//there is still empty space on the screen, so haven't won
-					return false;
-				}
+		//This looks the wrong way around. Actually need to do it this way or snake is drawn flipped 90 degrees.
+		for (int y = 0 ; y < GridSquares.maxY ; y++) {
+			for (int x = 0 ; x < GridSquares.maxX ; x++){
+				textSnake = textSnake + GridSquares.grid[x][y];
 			}
+			textSnake += "\n";
 		}
-		//But if we get here, the snake has filled the screen. win!
-		SnakeGame.setGameStage(SnakeGame.GAME_WON);
-		
-		return true;
+		return textSnake;
 	}
 
 	public void reset() {
 		hitWall = false;
 		ateTail = false;
-		fillSnakeSquaresWithZeros();
 		createStartSnake();
-	}
-
-	public boolean isGameOver() {
-		if (hitWall == true || ateTail == true){
-			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-			return true;
-			
-		}
-		return false;
 	}
 }
 

@@ -33,9 +33,8 @@ public class GameControls implements KeyListener{
 //		}
 		
 		if (SnakeGame.getGameStage() == SnakeGame.GAME_OVER){
-			snake.reset();
-			Score.resetScore();
-			
+			SnakeGame.reset();
+
 			//Need to start the timer and start the game again
 			SnakeGame.newGame();
 			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
@@ -77,9 +76,11 @@ public class GameControls implements KeyListener{
 			System.exit(0);    //quit if user presses the q key.
 
 		} else if (keyPressed == p) {
+			// Pause if user presses the P key
 			SnakeGame.setGameStage(SnakeGame.GAME_PAUSED);
 
 		} else if (keyPressed == r) {
+			// Restart if user presses the R key
 			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
 			SnakeGame.resumePausedGame();
 		}

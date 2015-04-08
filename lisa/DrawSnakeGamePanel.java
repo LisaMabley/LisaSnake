@@ -1,10 +1,7 @@
 package lisa;
 
-import lisa.Kibble;
-
 import java.awt.*;
 import java.util.LinkedList;
-
 import javax.swing.JPanel;
 
 /** This class responsible for displaying the graphics, so the snake, grid, kibble, instruction text and high score
@@ -15,16 +12,15 @@ import javax.swing.JPanel;
 
 public class DrawSnakeGamePanel extends JPanel {
 	
-	private static int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
+	private int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
 	
 	private Snake snake;
-	private Kibble kibble;
 	private Score score;
-	
-	DrawSnakeGamePanel(Snake s, Kibble k, Score sc){
-		this.snake = s;
-		this.kibble = k;
-		this.score = sc;
+
+	// Constructor
+	DrawSnakeGamePanel(Snake snake, Score score) {
+		this.snake = snake;
+		this.score = score;
 	}
 	
 	public Dimension getPreferredSize() {
@@ -89,13 +85,13 @@ public class DrawSnakeGamePanel extends JPanel {
 		g.drawString(newHighScore, 150, 400);
 		
 		g.drawString("press a key to play again", 150, 350);
-		g.drawString("Press q to quit the game",150,400);
+		g.drawString("Press q to quit the game", 150, 400);
 	}
 
 	private void displayGame(Graphics g) {
 		displayGameGrid(g);
 		displaySnake(g);
-		displayKibble(g);	
+		displayFood(g);
 	}
 
 	private void displayGameGrid(Graphics g) {
@@ -118,15 +114,32 @@ public class DrawSnakeGamePanel extends JPanel {
 		}
 	}
 
-	private void displayKibble(Graphics g) {
+	private void displayFood(Graphics graphics) {
+		// Draw all food that exists
 
-		//Draw the kibble in green
-		g.setColor(Color.ORANGE);
+		// First, draw kibble
+		graphics.setColor(FoodManager.kibble.displayColor);
+		int kibbleX = FoodManager.kibble.getFoodX() * SnakeGame.squareSize;
+		int kibbleY = FoodManager.kibble.getFoodY() * SnakeGame.squareSize;
+		graphics.fillRect(kibbleX+1, kibbleY+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
 
-		int x = kibble.getKibbleX() * SnakeGame.squareSize;
-		int y = kibble.getKibbleY() * SnakeGame.squareSize;
+		// If prey option is on, draw prey
+		if (SnakeGame.preyOn) {
+			graphics.setColor(FoodManager.prey.displayColor);
+			int preyX = FoodManager.prey.getFoodX() * SnakeGame.squareSize;
+			int preyY = FoodManager.prey.getFoodY() * SnakeGame.squareSize;
+			graphics.fillRect(preyX+1, preyY+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
+		}
 
-		g.fillRect(x+1, y+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
+		// If obstacle option is on, draw avocados
+		if (SnakeGame.obstaclesOn) {
+			for (Avocado avocado : FoodManager.avocados) {
+				int avocadoX = avocado.getFoodX() * SnakeGame.squareSize;
+				int avocadoY = avocado.getFoodY() * SnakeGame.squareSize;
+				graphics.setColor(avocado.displayColor);
+				graphics.fillRect(avocadoX+1, avocadoY+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
+			}
+		}
 	}
 
 	private void displaySnake(Graphics g) {
@@ -145,19 +158,17 @@ public class DrawSnakeGamePanel extends JPanel {
 		}
 	}
 
-//	private void displayInstructions(Graphics g) {
-//        g.drawString("Press any key to begin!", 100, 200);
-//        g.drawString("Press q to quit the game", 100, 300);
-//    	}
-
 	private void displayGameOptions(Graphics g) {
 		// Create and set up options GUI
+		// TODO Display this in same JFrame as game!!
+
 		GameOptionsGUI optionsGUI = new GameOptionsGUI();
 	}
 
 	private void displayUnpauseInstructions(Graphics g) {
 		// Display instructions for restarting paused game
-		g.drawString("GAME PAUSED", 300, 300);
+
+		g.drawString("GAME PAUSED", GridSquares.screenXCenter, GridSquares.screenYCenter);
 		g.drawString("Press R to resume", 300, 400);
 	}
 }
