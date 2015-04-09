@@ -145,8 +145,9 @@ public class SnakeGame {
 	}
 
 	public static void reset() {
-		snake.reset();
+		gameStage = BEFORE_GAME;
 		GridSquares.reset();
+		snake.reset();
 		Score.resetScore();
 		foodManager = new FoodManager(snake);
 	}

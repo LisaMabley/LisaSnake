@@ -116,7 +116,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		graphics.setColor(FoodManager.kibble.displayColor);
 		int kibbleX = FoodManager.kibble.getFoodX() * SnakeGame.squareSize;
 		int kibbleY = FoodManager.kibble.getFoodY() * SnakeGame.squareSize;
-		graphics.fillRect(kibbleX+1, kibbleY+1, SnakeGame.squareSize-1, SnakeGame.squareSize-1);
+		graphics.fillRect(kibbleX + 1, kibbleY + 1, SnakeGame.squareSize - 1, SnakeGame.squareSize - 1);
 
 		// If prey option is on, draw prey
 		if (SnakeGame.preyOn) {

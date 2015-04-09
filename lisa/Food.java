@@ -21,11 +21,16 @@ public abstract class Food {
         // Place food in random empty square
         Random randomNumberGenerator = new Random();
 
-        if (SnakeGame.getGameStage() == SnakeGame.DURING_GAME) {
+        int gameStage = SnakeGame.getGameStage();
+
+        if ( gameStage == SnakeGame.BEFORE_GAME ||
+                gameStage == SnakeGame.DURING_GAME ) {
             boolean foundValidLocation = false;
             while (!foundValidLocation) {
                 // Generate random location
                 foodX = randomNumberGenerator.nextInt(SnakeGame.xSquares);
+                System.out.println("X squares " + SnakeGame.xSquares);
+                System.out.println("Food x " + foodX);
                 foodY = randomNumberGenerator.nextInt(SnakeGame.ySquares);
 
                 // Check if location is empty

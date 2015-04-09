@@ -12,8 +12,8 @@ public class FoodManager {
     protected static ArrayList<Avocado> avocados;
     protected static Avocado eatenAvocado;
     private static Snake snake;
-    // 1 in 6 chance of new avocado each turn
-    private static int avocadoProbability = 10;
+    // 1 in 10 chance of new avocado each turn
+    private static int avocadoProbability = 25;
 
     public FoodManager(Snake sn) {
         kibble = new Kibble();
