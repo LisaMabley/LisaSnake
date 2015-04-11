@@ -10,6 +10,7 @@ public class Prey extends Food {
     public Prey() {
         this.growthIncrement = 3;
         this.displayColor = Color.PINK;
+        this.pointsForEating = 2;
 
         this.placeFood();
     }

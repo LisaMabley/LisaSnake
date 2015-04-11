@@ -50,9 +50,9 @@ public class GameOptionsGUI {
                 if (speed.equals(s)) {
                     SnakeGame.setGameSpeed(500);
                 } else if (speed.equals(m)) {
-                    SnakeGame.setGameSpeed(300);
+                    SnakeGame.setGameSpeed(350);
                 } else if (speed.equals(f)) {
-                    SnakeGame.setGameSpeed(100);
+                    SnakeGame.setGameSpeed(200);
                 }
             }
         });

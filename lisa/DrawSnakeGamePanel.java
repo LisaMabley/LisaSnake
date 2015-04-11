@@ -1,10 +1,14 @@
 package lisa;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.util.LinkedList;
 import javax.swing.JPanel;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
-/** This class responsible for displaying the graphics, so the snake, grid, kibble, instruction text and high score
+/** This class responsible for displaying the graphics, so the snake, grid, kibble, instruction text and high points
  * 
  * @author Clara
  *
@@ -15,12 +19,21 @@ public class DrawSnakeGamePanel extends JPanel {
 	private int gameStage;  //use this to figure out what to paint
 	
 	private Snake snake;
-	private Score score;
+	private boolean imagesOn = true;
+	private Image image;
+	private ImageObserver imageObserver;
 
 	// Constructor
-	DrawSnakeGamePanel(Snake snake, Score score) {
+	DrawSnakeGamePanel(Snake snake) {
 		this.snake = snake;
-		this.score = score;
+
+		try {
+			image = ImageIO.read(new File("Snake.gif"));
+
+		} catch (IOException e) {
+			System.out.println("Cannot find image files");
+			imagesOn = false;
+		}
 	}
 	
 	public Dimension getPreferredSize() {
@@ -45,7 +58,9 @@ public class DrawSnakeGamePanel extends JPanel {
 				break;
 			}
             case SnakeGame.DURING_GAME: {
-                displayGame(g);
+				g.drawImage(image, 100, 100, imageObserver);
+				System.out.println("drawing image");
+				displayGame(g);
                 break;
             }
             case SnakeGame.GAME_OVER: {
@@ -67,12 +82,12 @@ public class DrawSnakeGamePanel extends JPanel {
 
 	private void displayGameOver(Graphics g) {
 
-		g.clearRect(100,100,350,350);
+		g.clearRect(100, 100, 350, 350);
 		g.drawString("GAME OVER", 150, 150);
 		
-		String textScore = score.getStringScore();
-		String textHighScore = score.getStringHighScore();
-		String newHighScore = score.newHighScore();
+		String textScore = SnakeGame.getStringScore();
+		String textHighScore = ScoreManager.getStringHighScore();
+		String newHighScore = ScoreManager.newHighScore(SnakeGame.currentScore);
 		
 		g.drawString("SCORE = " + textScore, 150, 250);
 		

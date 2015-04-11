@@ -210,13 +210,6 @@ public class Snake {
 		lastHeading = currentHeading; //Update last confirmed heading
 	}
 
-//	public boolean isSnakeSegment(int foodX, int foodY) {
-//		if ([foodX][foodY] == 0) {
-//			return false;
-//		}
-//		return true;
-//	}
-
 	public boolean isSnakeHead(int X, int Y) {
 		return snakeHeadX == X && snakeHeadY == Y;
 	}

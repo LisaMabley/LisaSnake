@@ -15,6 +15,9 @@ public abstract class Food {
     // The amount the snake grows when eating each type of food
     protected int growthIncrement;
 
+    // Number of points for eating this food
+    protected int pointsForEating;
+
     protected Color displayColor;
 
     protected void placeFood(){
@@ -29,8 +32,6 @@ public abstract class Food {
             while (!foundValidLocation) {
                 // Generate random location
                 foodX = randomNumberGenerator.nextInt(SnakeGame.xSquares);
-                System.out.println("X squares " + SnakeGame.xSquares);
-                System.out.println("Food x " + foodX);
                 foodY = randomNumberGenerator.nextInt(SnakeGame.ySquares);
 
                 // Check if location is empty

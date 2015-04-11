@@ -12,13 +12,15 @@ public class FoodManager {
     protected static ArrayList<Avocado> avocados;
     protected static Avocado eatenAvocado;
     private static Snake snake;
+    private static Score score;
     // 1 in 10 chance of new avocado each turn
     private static int avocadoProbability = 25;
 
-    public FoodManager(Snake sn) {
+    public FoodManager(Snake sn, Score thisGameScore) {
         kibble = new Kibble();
         snake = sn;
         avocados = new ArrayList<Avocado>();
+        score = thisGameScore;
 
         if (SnakeGame.obstaclesOn) {
             Avocado newAvocado = new Avocado();
@@ -38,9 +40,11 @@ public class FoodManager {
             snake.justAteMustGrowThisMuch += kibble.growthIncrement;
         }
 
-        if (SnakeGame.preyOn && didSnakeEat(prey)) {
-            prey.placeFood();
-            snake.justAteMustGrowThisMuch += prey.growthIncrement;
+        if (SnakeGame.preyOn) {
+            if (didSnakeEat(prey)) {
+                prey.placeFood();
+                snake.justAteMustGrowThisMuch += prey.growthIncrement;
+            }
         }
 
         if (SnakeGame.obstaclesOn) {
@@ -50,21 +54,23 @@ public class FoodManager {
                 avocados.add(newAvocado);
             }
 
-            for (Avocado avocado : avocados) {
-                avocado.incrementRipeness();
+            if (!avocados.isEmpty()) {
+                for (Avocado avocado : avocados) {
+                    avocado.incrementRipeness();
 
-                if (didSnakeEat(avocado) && avocado.isEdible) {
-                    snake.justAteMustGrowThisMuch += avocado.growthIncrement;
-                    eatenAvocado = avocado;
+                    if (didSnakeEat(avocado) && avocado.isEdible) {
+                        snake.justAteMustGrowThisMuch += avocado.growthIncrement;
+                        eatenAvocado = avocado;
 
-                } else if (didSnakeEat(avocado)) {
-                    SnakeGame.setGameStage(SnakeGame.GAME_OVER);
+                    } else if (didSnakeEat(avocado)) {
+                        SnakeGame.setGameStage(SnakeGame.GAME_OVER);
+                    }
                 }
-            }
 
-            if (eatenAvocado != null) {
-                avocados.remove(eatenAvocado);
-                eatenAvocado = null;
+                if (eatenAvocado != null) {
+                    avocados.remove(eatenAvocado);
+                    eatenAvocado = null;
+                }
             }
         }
     }
@@ -77,6 +83,7 @@ public class FoodManager {
         //Is any food in the snake? It would be in the same square as the snake's head
         if (snake.isSnakeHead(food.foodX, food.foodY)) {
             SoundPlayer.playEatSound();
+            score.increaseScore(food.pointsForEating);
 
             if (GridSquares.wonGame()) {
                 SnakeGame.setGameStage(SnakeGame.GAME_WON);

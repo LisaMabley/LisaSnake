@@ -20,6 +20,7 @@ public class Avocado extends Food {
     public Avocado() {
         this.growthIncrement = 3;
         this.displayColor = unripeColor;
+        this.pointsForEating = 2;
         this.ripeness = 0;
         this.willBeRipeForThisMuchLonger = ripenessDuration;
 

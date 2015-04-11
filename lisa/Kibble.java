@@ -8,6 +8,7 @@ public class Kibble extends Food {
 	public Kibble() {
 		this.growthIncrement = 2;
 		this.displayColor = Color.ORANGE;
+		this.pointsForEating = 1;
 		
 		this.placeFood();
 	}

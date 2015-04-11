@@ -16,7 +16,7 @@ public class SnakeGame {
 
 	protected static GridSquares gridSquares;
 	protected static Snake snake;
-	protected static Score score;
+	protected static Score currentScore;
 	protected static FoodManager foodManager;
 
 	// User options
@@ -76,7 +76,7 @@ public class SnakeGame {
 
 	protected static void displayGameGrid() {
 		snakeFrame.remove(optionsPanel);
-		snakePanel = new DrawSnakeGamePanel(snake, score);
+		snakePanel = new DrawSnakeGamePanel(snake);
 		snakeFrame.add(snakePanel);
 		snakeFrame.setFocusable(true);
 		snakeFrame.addKeyListener(new GameControls(snake));
@@ -93,26 +93,26 @@ public class SnakeGame {
 		ySquares = yPixelMaxDimension / squareSize;
 		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
 		snake = new Snake();
-		foodManager = new FoodManager(snake);
+		currentScore = new Score();
+		foodManager = new FoodManager(snake, currentScore);
 	}
 
-	private static void initializeSettings() {
+	private static void initializeSoundPlayer() {
 		soundPlayer = new SoundPlayer();
-		score = new Score();
 	}
 
 	protected static void newGame() {
 		gameStage = DURING_GAME;
 		Timer timer = new Timer();
-		GameClock clockTick = new GameClock(snake, score, snakePanel);
+		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
 		snakePanel.repaint();
 	}
 
 	public static void resumePausedGame() {
 		Timer timer = new Timer();
-		GameClock clockTick = new GameClock(snake, score, snakePanel);
-		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
+		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
+		timer.scheduleAtFixedRate(clockTick, 0, clockInterval);
 	}
 
 	public static void main(String[] args) {
@@ -121,7 +121,7 @@ public class SnakeGame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				initializeGameBoard();
-				initializeSettings();
+				initializeSoundPlayer();
 				createAndShowGUI();
 			}
 		});
@@ -148,8 +148,16 @@ public class SnakeGame {
 		gameStage = BEFORE_GAME;
 		GridSquares.reset();
 		snake.reset();
-		Score.resetScore();
-		foodManager = new FoodManager(snake);
+		currentScore = new Score();
+		foodManager = new FoodManager(snake, currentScore);
+	}
+
+	public static int getCurrentScore() {
+		return currentScore.points;
+	}
+
+	public static String getStringScore() {
+		return Integer.toString(currentScore.points);
 	}
 
 	// Getters & Setters for User Options
