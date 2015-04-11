@@ -8,31 +8,28 @@ import java.util.Random;
 public class FoodManager {
 
     protected static Kibble kibble;
-    protected static Prey prey;
     protected static ArrayList<Avocado> avocados;
     protected static Avocado eatenAvocado;
     private static Snake snake;
     private static Score score;
-    // 1 in 10 chance of new avocado each turn
+    // 1 in 25 chance of new avocado each turn
     private static int avocadoProbability = 25;
 
+    // Constructor
     public FoodManager(Snake sn, Score thisGameScore) {
         kibble = new Kibble();
         snake = sn;
         avocados = new ArrayList<Avocado>();
         score = thisGameScore;
 
-        if (SnakeGame.obstaclesOn) {
+        if (SnakeGame.avocadosOn) {
             Avocado newAvocado = new Avocado();
             avocados.add(newAvocado);
-        }
-
-        if (SnakeGame.preyOn) {
-            prey = new Prey();
         }
     }
 
     public static void updateFood() {
+        // Updates all food objects each clock tick
         Random randomNumberGenerator = new Random();
 
         if (didSnakeEat(kibble)) {
@@ -40,14 +37,7 @@ public class FoodManager {
             snake.justAteMustGrowThisMuch += kibble.growthIncrement;
         }
 
-        if (SnakeGame.preyOn) {
-            if (didSnakeEat(prey)) {
-                prey.placeFood();
-                snake.justAteMustGrowThisMuch += prey.growthIncrement;
-            }
-        }
-
-        if (SnakeGame.obstaclesOn) {
+        if (SnakeGame.avocadosOn) {
             int randomChoice = randomNumberGenerator.nextInt(avocadoProbability);
             if (randomChoice == 0) {
                 Avocado newAvocado = new Avocado();
@@ -82,9 +72,11 @@ public class FoodManager {
     private static boolean didSnakeEat(Food food) {
         //Is any food in the snake? It would be in the same square as the snake's head
         if (snake.isSnakeHead(food.foodX, food.foodY)) {
+            // If so, play sound and update game points
             SoundPlayer.playEatSound();
             score.increaseScore(food.pointsForEating);
 
+            // Check to see if game has been won
             if (GridSquares.wonGame()) {
                 SnakeGame.setGameStage(SnakeGame.GAME_WON);
             }

@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SoundPlayer {
-    // Creates and plays game event soudns
+    // Creates and plays game event sounds
 
     private static AudioClip eatSound;
     private static AudioClip warpWallSound;
@@ -17,7 +17,7 @@ public class SoundPlayer {
 
     public SoundPlayer() {
         try {
-            // Create game sounds
+            // Create game sounds from GitHub URLs
             URL eatSoundUrl = new URL("https://raw.githubusercontent.com/LisaMabley/LisaSnake/master/kibble.wav");
             URL warpWallSoundUrl = new URL("https://raw.githubusercontent.com/LisaMabley/LisaSnake/master/warp.wav");
             URL loseGameSoundUrl = new URL("https://raw.githubusercontent.com/LisaMabley/LisaSnake/master/lostgame.wav");
@@ -30,7 +30,7 @@ public class SoundPlayer {
         } catch (MalformedURLException exception) {
             // Those urls are fine ... but required to have this
             System.out.println("Bad URL");
-            System.out.println(exception.getStackTrace());
+            System.out.println(exception.getStackTrace().toString());
         }
     }
 

@@ -20,6 +20,7 @@ public class GameOptionsGUI {
     private JCheckBox rodentOnCheckBox;
     private JLabel titleLabel;
     private JComboBox speedComboBox;
+    private JTextArea instructionsTextArea;
     private JCheckBox rodentsOnCheckBox;
 
     // Constructor

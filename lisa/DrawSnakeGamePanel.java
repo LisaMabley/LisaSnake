@@ -4,9 +4,6 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.util.LinkedList;
 import javax.swing.JPanel;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 
 /** This class responsible for displaying the graphics, so the snake, grid, kibble, instruction text and high points
  * 
@@ -27,13 +24,13 @@ public class DrawSnakeGamePanel extends JPanel {
 	DrawSnakeGamePanel(Snake snake) {
 		this.snake = snake;
 
-		try {
-			image = ImageIO.read(new File("Snake.gif"));
-
-		} catch (IOException e) {
-			System.out.println("Cannot find image files");
-			imagesOn = false;
-		}
+//		try {
+//			image = ImageIO.read(new File("Snake.gif"));
+//
+//		} catch (IOException e) {
+//			System.out.println("Cannot find image files");
+//			imagesOn = false;
+//		}
 	}
 	
 	public Dimension getPreferredSize() {
@@ -58,8 +55,7 @@ public class DrawSnakeGamePanel extends JPanel {
 				break;
 			}
             case SnakeGame.DURING_GAME: {
-				g.drawImage(image, 100, 100, imageObserver);
-				System.out.println("drawing image");
+//				g.drawImage(image, 100, 100, imageObserver);
 				displayGame(g);
                 break;
             }
@@ -142,7 +138,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		}
 
 		// If obstacle option is on, draw avocados
-		if (SnakeGame.obstaclesOn) {
+		if (SnakeGame.avocadosOn) {
 			for (Avocado avocado : FoodManager.avocados) {
 				int avocadoX = avocado.getFoodX() * SnakeGame.squareSize;
 				int avocadoY = avocado.getFoodY() * SnakeGame.squareSize;

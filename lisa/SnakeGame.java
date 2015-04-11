@@ -17,13 +17,13 @@ public class SnakeGame {
 	protected static GridSquares gridSquares;
 	protected static Snake snake;
 	protected static Score currentScore;
+	protected static ScoreManager scoreManager;
 	protected static FoodManager foodManager;
 
 	// User options
 	public static boolean soundsOn = true;
 	public static boolean warpWallsOn = false;
-	public static boolean obstaclesOn = false;
-	public static boolean preyOn = false;
+	public static boolean avocadosOn = false;
 
 	static final int GAME_PAUSED = 0;
 	static final int BEFORE_GAME = 1;
@@ -86,7 +86,7 @@ public class SnakeGame {
 		newGame();
 	}
 
-	private static void initializeGameBoard() {
+	private static void initializeGame() {
 		// Set up snake and grid
 		// Called by OptionsGUI when player changes grid size
 		xSquares = xPixelMaxDimension / squareSize;
@@ -97,8 +97,9 @@ public class SnakeGame {
 		foodManager = new FoodManager(snake, currentScore);
 	}
 
-	private static void initializeSoundPlayer() {
+	private static void initializeOnStartup() {
 		soundPlayer = new SoundPlayer();
+		scoreManager = new ScoreManager();
 	}
 
 	protected static void newGame() {
@@ -120,8 +121,8 @@ public class SnakeGame {
 		//creating and showing this application's GUI.
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				initializeGameBoard();
-				initializeSoundPlayer();
+				initializeGame();
+				initializeOnStartup();
 				createAndShowGUI();
 			}
 		});
@@ -169,7 +170,7 @@ public class SnakeGame {
 		xPixelMaxDimension = pixels;
 		yPixelMaxDimension = pixels;
 		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
-		initializeGameBoard();
+		initializeGame();
 	}
 
 	public static void setSoundsOn(boolean soundsOn) { SnakeGame.soundsOn = soundsOn; }
@@ -179,10 +180,6 @@ public class SnakeGame {
 	}
 
 	public static void setObstaclesOn(boolean obstaclesOn) {
-		SnakeGame.obstaclesOn = obstaclesOn;
-	}
-
-	public static void setPreyOn(boolean preyOn)  {
-		SnakeGame.preyOn = preyOn;
+		SnakeGame.avocadosOn = obstaclesOn;
 	}
 }

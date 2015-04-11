@@ -18,6 +18,7 @@ public abstract class Food {
     // Number of points for eating this food
     protected int pointsForEating;
 
+    // Color to display this food
     protected Color displayColor;
 
     protected void placeFood(){
@@ -35,6 +36,7 @@ public abstract class Food {
                 foodY = randomNumberGenerator.nextInt(SnakeGame.ySquares);
 
                 // Check if location is empty
+                // If so, break out of while loop
                 if (FoodManager.isEmptySquare(foodX, foodY)) {
                     GridSquares.setSquare(foodX, foodY, GridSquares.CONTAINS_FOOD);
                     foundValidLocation = true;
