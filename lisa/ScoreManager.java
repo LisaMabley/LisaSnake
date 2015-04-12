@@ -86,31 +86,27 @@ public class ScoreManager {
         }
     }
 
-    public static String newHighScore(Score newScore) {
+    public static void checkIfNewHighScore(Score newScore) {
 
         if (newScore.points > lowestHighScore) {
-            if (!topTenScores.contains(newScore)) {
-                topTenScores.add(newScore);
-                Collections.sort(topTenScores, Collections.reverseOrder());
-                updateTopScoresFile();
-            }
-
-            if (!topTenScores.isEmpty()) {
-                lowestHighScore = topTenScores.getLast().points;
-            }
-
-            return "New High Score!!";
-
-        } else {
-            return "";
+            updateHighScores(newScore);
         }
     }
 
-    public static String getStringHighScore() {
-        return Integer.toString(lowestHighScore);
+    protected static void updateHighScores(Score newHighScore) {
+        if (!topTenScores.contains(newHighScore)) {
+            topTenScores.add(newHighScore);
+            Collections.sort(topTenScores, Collections.reverseOrder());
+            updateTopScoresFile();
+            SnakeGame.gameOverGUI.newHighScore();
+        }
+
+        if (!topTenScores.isEmpty()) {
+            lowestHighScore = topTenScores.getLast().points;
+        }
     }
 
-    private static void updateTopScoresFile() {
+    protected static void updateTopScoresFile() {
         // When top scores change, update the entire file
 
         try {
@@ -132,5 +128,9 @@ public class ScoreManager {
             System.out.println("Could not create TopScores.txt");
             System.out.println(ioe.toString());
         }
+    }
+
+    public static LinkedList<Score> getTopTenScores() {
+        return topTenScores;
     }
 }

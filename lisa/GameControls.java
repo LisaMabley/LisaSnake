@@ -7,21 +7,20 @@ public class GameControls implements KeyListener{
 	
 	Snake snake;
 	
-	GameControls(Snake s){
-		this.snake = s;
-	}
-	
 	public void keyPressed(KeyEvent ev) {
+
 		// keyPressed events are for catching events like function keys, enter, arrow keys
 		// We want to listen for arrow keys to move snake
 		// Has to id if user pressed arrow key, and if so, send info to lisa.Snake object
 
+		snake = SnakeGame.snake;
+
 		// Is game running? No? tell the game to draw grid and restart
-		if (SnakeGame.getGameStage() == SnakeGame.GAME_OVER){
-			SnakeGame.reset();
+		if (SnakeGame.getGameStage() != SnakeGame.DURING_GAME){
 
 			// Need to start the timer and start the game again
-			SnakeGame.newGame();
+			SnakeGame.reset();
+			SnakeGame.displayOptionsGUI();
 			return;
 		}
 

@@ -10,17 +10,13 @@ public class FoodManager {
     protected static Kibble kibble;
     protected static ArrayList<Avocado> avocados;
     protected static Avocado eatenAvocado;
-    private static Snake snake;
-    private static Score score;
     // 1 in 25 chance of new avocado each turn
     private static int avocadoProbability = 25;
 
     // Constructor
-    public FoodManager(Snake sn, Score thisGameScore) {
+    public FoodManager() {
         kibble = new Kibble();
-        snake = sn;
         avocados = new ArrayList<Avocado>();
-        score = thisGameScore;
 
         if (SnakeGame.avocadosOn) {
             Avocado newAvocado = new Avocado();
@@ -34,7 +30,7 @@ public class FoodManager {
 
         if (didSnakeEat(kibble)) {
             kibble.placeFood();
-            snake.justAteMustGrowThisMuch += kibble.growthIncrement;
+            SnakeGame.snake.justAteMustGrowThisMuch += kibble.growthIncrement;
         }
 
         if (SnakeGame.avocadosOn) {
@@ -49,7 +45,7 @@ public class FoodManager {
                     avocado.incrementRipeness();
 
                     if (didSnakeEat(avocado) && avocado.isEdible) {
-                        snake.justAteMustGrowThisMuch += avocado.growthIncrement;
+                        SnakeGame.snake.justAteMustGrowThisMuch += avocado.growthIncrement;
                         eatenAvocado = avocado;
 
                     } else if (didSnakeEat(avocado)) {
@@ -71,10 +67,10 @@ public class FoodManager {
 
     private static boolean didSnakeEat(Food food) {
         //Is any food in the snake? It would be in the same square as the snake's head
-        if (snake.isSnakeHead(food.foodX, food.foodY)) {
+        if (SnakeGame.snake.isSnakeHead(food.foodX, food.foodY)) {
             // If so, play sound and update game points
             SoundPlayer.playEatSound();
-            score.increaseScore(food.pointsForEating);
+            SnakeGame.currentScore.increaseScore(food.pointsForEating);
 
             // Check to see if game has been won
             if (GridSquares.wonGame()) {

@@ -2,57 +2,14 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="lisa.GameOverGUI">
   <grid id="27dc6" binding="rootPanel" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="511" height="465"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <hspacer id="490f7">
-        <constraints>
-          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </hspacer>
-      <component id="695ce" class="javax.swing.JButton" binding="playAgainButton" default-binding="true">
-        <constraints>
-          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <text value="Play Again"/>
-        </properties>
-      </component>
-      <component id="609ad" class="javax.swing.JButton" binding="quitButton" default-binding="true">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <text value="Quit"/>
-        </properties>
-      </component>
-      <component id="f2a6" class="javax.swing.JLabel" binding="endTitleLabel">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="20" left="150" bottom="10" right="50" weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <minimumSize width="200" height="16"/>
-          <text value="GAME OVER"/>
-        </properties>
-      </component>
-      <component id="7e9c9" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <text value="Your score:"/>
-        </properties>
-      </component>
       <component id="923a6" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
@@ -61,49 +18,105 @@
       </component>
       <component id="139bf" class="javax.swing.JTextArea" binding="highScoreTextArea">
         <constraints>
-          <grid row="2" column="2" row-span="4" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="2" column="0" row-span="13" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
-          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+          <gridbag top="0" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <background color="-1118482"/>
+          <editable value="false"/>
+          <lineWrap value="true"/>
+          <minimumSize width="140" height="140"/>
+          <preferredSize width="220" height="220"/>
+          <wrapStyleWord value="true"/>
+        </properties>
+      </component>
+      <component id="f2a6" class="javax.swing.JLabel" binding="endTitleLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="20" left="70" bottom="10" right="50" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <minimumSize width="200" height="16"/>
+          <text value="GAME OVER"/>
         </properties>
       </component>
       <component id="55c6e" class="javax.swing.JLabel" binding="currentScoreLabel">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <text value=""/>
         </properties>
       </component>
-      <component id="f106" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="7e9c9" class="javax.swing.JLabel">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-          <gridbag top="0" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+          <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="Your score:"/>
+        </properties>
       </component>
-      <component id="dc2bd" class="javax.swing.JLabel">
+      <component id="dc2bd" class="javax.swing.JLabel" binding="highScoreInstructionLabel1">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag top="10" left="10" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Enter your name for the hall of fame"/>
+          <text value="Enter your name "/>
+          <visible value="false"/>
+        </properties>
+      </component>
+      <component id="cfb7" class="javax.swing.JLabel" binding="highScoreInstructionLabel2">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="10" bottom="5" right="10" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="for the hall of fame"/>
+          <visible value="false"/>
+        </properties>
+      </component>
+      <component id="f106" class="javax.swing.JTextField" binding="playerNameTextField">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag top="0" left="10" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <visible value="false"/>
         </properties>
       </component>
       <component id="b4478" class="javax.swing.JButton" binding="submitNameButton" default-binding="true">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <text value="Submit Name"/>
+          <visible value="false"/>
+        </properties>
+      </component>
+      <component id="695ce" class="javax.swing.JButton" binding="playAgainButton" default-binding="true">
+        <constraints>
+          <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Play Again"/>
+        </properties>
+      </component>
+      <component id="609ad" class="javax.swing.JButton" binding="quitButton" default-binding="true">
+        <constraints>
+          <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Quit"/>
         </properties>
       </component>
     </children>

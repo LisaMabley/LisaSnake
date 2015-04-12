@@ -16,9 +16,9 @@ public class DrawSnakeGamePanel extends JPanel {
 	private int gameStage;  //use this to figure out what to paint
 	
 	private Snake snake;
-	private boolean imagesOn = true;
-	private Image image;
-	private ImageObserver imageObserver;
+//	private boolean imagesOn = true;
+//	private Image image;
+//	private ImageObserver imageObserver;
 
 	// Constructor
 	DrawSnakeGamePanel(Snake snake) {
@@ -69,14 +69,6 @@ public class DrawSnakeGamePanel extends JPanel {
             }
         }
     }
-
-//		String textScore = SnakeGame.getStringScore();
-//		String textHighScore = ScoreManager.getStringHighScore();
-//		String newHighScore = ScoreManager.newHighScore(SnakeGame.currentScore);
-//
-//		g.drawString("SCORE = " + textScore, 150, 250);
-//
-//		g.drawString("HIGH SCORE = " + textHighScore, 150, 300);
 
 	private void displayGame(Graphics g) {
 		displayGameGrid(g);

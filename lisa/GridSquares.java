@@ -10,17 +10,17 @@ public class GridSquares {
     // Represent square content
     static final int CONTAINS_FOOD = -1;
     static final int EMPTY = 0;
-    static final int SNAKE_HEAD = 1;
-    static final int SNAKESEGMENT_HORIZ = 2;
-    static final int SNAKESEGMENT_VERT = 3;
-    static final int SNAKECORNER_1 = 4;
-    static final int SNAKECORNER_2 = 5;
-    static final int SNAKECORNER_3 = 6;
-    static final int SNAKECORNER_4 = 7;
-    static final int SNAKETAIL_UP = 8;
-    static final int SNAKETAIL_DWN = 9;
-    static final int SNAKETAIL_LFT = 10;
-    static final int SNAKETAIL_RT = 11;
+//    static final int SNAKE_HEAD = 1;
+//    static final int SNAKESEGMENT_HORIZ = 2;
+//    static final int SNAKESEGMENT_VERT = 3;
+//    static final int SNAKECORNER_1 = 4;
+//    static final int SNAKECORNER_2 = 5;
+//    static final int SNAKECORNER_3 = 6;
+//    static final int SNAKECORNER_4 = 7;
+//    static final int SNAKETAIL_UP = 8;
+//    static final int SNAKETAIL_DWN = 9;
+//    static final int SNAKETAIL_LFT = 10;
+//    static final int SNAKETAIL_RT = 11;
 
 
     // A 0 means there is nothing in this square
@@ -43,7 +43,6 @@ public class GridSquares {
 
         screenXCenter = (int) maxX/2;
         screenYCenter = (int) maxY/2;
-        System.out.println("Screen X center: " + screenXCenter);
 
         //Create grid squares
         grid = new int[maxX][maxY];

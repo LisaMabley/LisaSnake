@@ -48,9 +48,9 @@ public class SnakeGame {
 	static JFrame snakeFrame;
 	static DrawSnakeGamePanel snakePanel;
 	static JPanel optionsPanel;
-	static GameOptionsGUI optionsFormGUI = new GameOptionsGUI();
 	static JPanel gameOverPanel;
-	static GameOverGUI gameOverGUI = new GameOverGUI();
+	static GameOptionsGUI gameOptionsGUI;
+	static GameOverGUI gameOverGUI;
 
 	//Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
 	//http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
@@ -58,14 +58,68 @@ public class SnakeGame {
 
 	static SoundPlayer soundPlayer;
 
+	public static void main(String[] args) {
+		// STEP 1: Schedule a job for the event-dispatching thread
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				initializeOnStartup();
+				initializeGame();
+				displayOptionsGUI();
+			}
+		});
+	}
+
+	private static void initializeOnStartup() {
+		// STEP 2: Create and set up all elements
+		// that can persist over multiple games
+
+		snakeFrame = new JFrame();
+		snakeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
+		snakeFrame.setUndecorated(true); //hide title bar
+		snakeFrame.setResizable(false);
+		snakeFrame.setFocusable(true);
+		snakeFrame.addKeyListener(new GameControls());
+		snakeFrame.setVisible(true);
+
+		xSquares = xPixelMaxDimension / squareSize;
+		ySquares = yPixelMaxDimension / squareSize;
+		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
+
+		soundPlayer = new SoundPlayer();
+		scoreManager = new ScoreManager();
+		foodManager = new FoodManager();
+
+		gameOptionsGUI = new GameOptionsGUI();
+		gameOverGUI = new GameOverGUI();
+	}
+
+	private static void initializeGame() {
+		// STEP 3: Set up snake and grid
+		// Called by SnakeGame at the beginning of each game
+		// Called by OptionsGUI when grid size is changed
+
+		xSquares = xPixelMaxDimension / squareSize;
+		ySquares = yPixelMaxDimension / squareSize;
+		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
+		snake = new Snake();
+		currentScore = new Score();
+	}
+
 	protected static void displayOptionsGUI() {
-		if (gameStage == GAME_WON || gameStage == GAME_OVER) {
+		// STEP 4: Display game options GUI
+		// Called by SnakeGame at the beginning of play
+
+		// If this is not first round of play,
+		// remove game over panel
+		if (gameStage == GAME_OVER || gameStage == GAME_WON) {
 			snakeFrame.remove(gameOverPanel);
 			gameStage = BEFORE_GAME;
 		}
 
 		// Show options GUI
-		optionsPanel = optionsFormGUI.rootPanel;
+		optionsPanel = gameOptionsGUI.rootPanel;
 		optionsPanel.setFocusable(true);
 		optionsPanel.requestFocusInWindow();
 		snakeFrame.add(optionsPanel);
@@ -74,78 +128,60 @@ public class SnakeGame {
 	}
 
 	protected static void displayGameGrid() {
+		// STEP 5: Display game grid
+
 		snakeFrame.remove(optionsPanel);
 		snakePanel = new DrawSnakeGamePanel(snake);
 		snakeFrame.add(snakePanel);
 		snakeFrame.setFocusable(true);
-		snakeFrame.addKeyListener(new GameControls(snake));
+		snakeFrame.addKeyListener(new GameControls());
 		snakeFrame.validate();
 		snakeFrame.repaint();
 
 		newGame();
 	}
 
-	private static void initializeGame() {
-		// Set up snake and grid
-		// Called by OptionsGUI when player changes grid size
-		xSquares = xPixelMaxDimension / squareSize;
-		ySquares = yPixelMaxDimension / squareSize;
-		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
-		snake = new Snake();
-		currentScore = new Score();
-		foodManager = new FoodManager(snake, currentScore);
-	}
-
-	private static void initializeOnStartup() {
-		//Create and set up the window.
-		snakeFrame = new JFrame();
-		snakeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
-		snakeFrame.setUndecorated(true); //hide title bar
-		snakeFrame.setResizable(false);
-		snakeFrame.setFocusable(true);
-		snakeFrame.addKeyListener(new GameControls(snake));
-		snakeFrame.setVisible(true);
-
-		soundPlayer = new SoundPlayer();
-		scoreManager = new ScoreManager();
-	}
-
 	protected static void newGame() {
+		// STEP 6: Start game clock and timer
+
 		gameStage = DURING_GAME;
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
-		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
+		timer.scheduleAtFixedRate(clockTick, 0, clockInterval);
 		snakePanel.repaint();
 	}
 
 	public static void resumePausedGame() {
+		// OPTIONAL: If game is ever paused,
+		// Create new game clock and timer to restart game
+
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0, clockInterval);
 	}
 
-	public static void main(String[] args) {
-		//Schedule a job for the event-dispatching thread:
-		//creating and showing this application's GUI.
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				initializeGame();
-				initializeOnStartup();
-				displayOptionsGUI();
-			}
-		});
-	}
-
 	protected static void displayGameOverGUI() {
+		// STEP 7: Display score & high scores in GameOver GUI
+
 		snakeFrame.remove(snakePanel);
 
 		gameOverPanel = gameOverGUI.rootPanel;
+		gameOverGUI.displayScoresInGUI();
 		snakeFrame.add(gameOverPanel);
+		ScoreManager.checkIfNewHighScore(currentScore);
 		snakeFrame.validate();
 		snakeFrame.repaint();
 	}
 
+	public static void reset() {
+		// STEP 8: Reset and repeat, if desired
+
+		GridSquares.reset();
+		snake.createStartSnake();
+		currentScore = new Score();
+	}
+
+	// Game stage getter and setter
 	public static int getGameStage() {
 		return gameStage;
 	}
@@ -161,14 +197,6 @@ public class SnakeGame {
 				SoundPlayer.playWonGameSound();
 				break;
 		}
-	}
-
-	public static void reset() {
-		gameStage = BEFORE_GAME;
-		GridSquares.reset();
-		snake.createStartSnake();
-		currentScore = new Score();
-		foodManager = new FoodManager(snake, currentScore);
 	}
 
 	// Getters & Setters for User Options

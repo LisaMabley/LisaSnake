@@ -13,9 +13,14 @@ public class Score implements Comparable<Score> {
 		this.points = 0;
 		this.date = new Date();
 	}
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public void increaseScore(int byHowMuch) {
 		points += byHowMuch;
+		System.out.println(points);
 	}
 
 	public int compareTo(Score score) {
