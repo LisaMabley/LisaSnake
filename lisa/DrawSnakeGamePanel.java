@@ -60,39 +60,23 @@ public class DrawSnakeGamePanel extends JPanel {
                 break;
             }
             case SnakeGame.GAME_OVER: {
-                displayGameOver(g);
-                break;
+				SnakeGame.displayGameOverGUI();
+				break;
             }
             case SnakeGame.GAME_WON: {
-                displayGameWon(g);
+				SnakeGame.displayGameOverGUI();
                 break;
             }
         }
     }
 
-	private void displayGameWon(Graphics g) {
-		// TODO Replace this with something really special!
-		g.clearRect(100, 100, 350, 350);
-		g.drawString("YOU WON SNAKE!!!", 150, 150);
-	}
-
-	private void displayGameOver(Graphics g) {
-
-		g.clearRect(100, 100, 350, 350);
-		g.drawString("GAME OVER", 150, 150);
-		
-		String textScore = SnakeGame.getStringScore();
-		String textHighScore = ScoreManager.getStringHighScore();
-		String newHighScore = ScoreManager.newHighScore(SnakeGame.currentScore);
-		
-		g.drawString("SCORE = " + textScore, 150, 250);
-		
-		g.drawString("HIGH SCORE = " + textHighScore, 150, 300);
-		g.drawString(newHighScore, 150, 400);
-		
-		g.drawString("press a key to play again", 150, 350);
-		g.drawString("Press q to quit the game", 150, 400);
-	}
+//		String textScore = SnakeGame.getStringScore();
+//		String textHighScore = ScoreManager.getStringHighScore();
+//		String newHighScore = ScoreManager.newHighScore(SnakeGame.currentScore);
+//
+//		g.drawString("SCORE = " + textScore, 150, 250);
+//
+//		g.drawString("HIGH SCORE = " + textHighScore, 150, 300);
 
 	private void displayGame(Graphics g) {
 		displayGameGrid(g);
@@ -129,14 +113,6 @@ public class DrawSnakeGamePanel extends JPanel {
 		int kibbleY = FoodManager.kibble.getFoodY() * SnakeGame.squareSize;
 		graphics.fillRect(kibbleX + 1, kibbleY + 1, SnakeGame.squareSize - 1, SnakeGame.squareSize - 1);
 
-		// If prey option is on, draw prey
-		if (SnakeGame.preyOn) {
-			graphics.setColor(FoodManager.prey.displayColor);
-			int preyX = FoodManager.prey.getFoodX() * SnakeGame.squareSize;
-			int preyY = FoodManager.prey.getFoodY() * SnakeGame.squareSize;
-			graphics.fillRect(preyX+1, preyY+1, SnakeGame.squareSize-1, SnakeGame.squareSize-1);
-		}
-
 		// If obstacle option is on, draw avocados
 		if (SnakeGame.avocadosOn) {
 			for (Avocado avocado : FoodManager.avocados) {
@@ -168,7 +144,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		// Display instructions for restarting paused game
 
 		g.drawString("GAME PAUSED", GridSquares.screenXCenter, GridSquares.screenYCenter);
-		g.drawString("Press R to resume", 300, 400);
+		g.drawString("Press R to resume", GridSquares.screenXCenter, GridSquares.screenYCenter - 40);
 	}
 }
 

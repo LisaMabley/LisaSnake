@@ -17,14 +17,16 @@ public class GameOptionsGUI {
     private JCheckBox soundEffectsOnCheckBox;
     private JCheckBox warpWallsOnCheckBox;
     private JCheckBox avocadosOnCheckBox;
-    private JCheckBox rodentOnCheckBox;
     private JLabel titleLabel;
     private JComboBox speedComboBox;
     private JTextArea instructionsTextArea;
-    private JCheckBox rodentsOnCheckBox;
 
     // Constructor
     public GameOptionsGUI() {
+
+        // Display instructions
+        final String basicInstructions = "Eat the yellow kibble so your snake will grow. Game ends if you hit a wall or yourself. Fill the entire screen to win.";
+        instructionsTextArea.setText(basicInstructions);
 
         // Set options for size ComboBox
         final String small = "8 x 8";
@@ -88,8 +90,11 @@ public class GameOptionsGUI {
             public void itemStateChanged(ItemEvent e) {
                 if (warpWallsOnCheckBox.isSelected()) {
                     SnakeGame.setWarpWallsOn(true);
+                    instructionsTextArea.setText("With warp walls turned on, you can exit on one side of the screen, only to reemerge on the opposite side.");
+
                 } else {
                     SnakeGame.setWarpWallsOn(false);
+                    instructionsTextArea.setText(basicInstructions);
                 }
             }
         });
@@ -98,20 +103,12 @@ public class GameOptionsGUI {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (avocadosOnCheckBox.isSelected()) {
-                    SnakeGame.setObstaclesOn(true);
-                } else {
-                    SnakeGame.setObstaclesOn(false);
-                }
-            }
-        });
+                    SnakeGame.setAvocadosOn(true);
+                    instructionsTextArea.setText("Avocados can only be eaten during the small window when they turn bright green.");
 
-        rodentsOnCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (rodentsOnCheckBox.isSelected()) {
-                    SnakeGame.setPreyOn(true);
                 } else {
-                    SnakeGame.setPreyOn(false);
+                    SnakeGame.setAvocadosOn(false);
+                    instructionsTextArea.setText(basicInstructions);
                 }
             }
         });

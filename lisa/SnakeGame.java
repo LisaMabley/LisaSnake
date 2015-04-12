@@ -48,30 +48,29 @@ public class SnakeGame {
 	static JFrame snakeFrame;
 	static DrawSnakeGamePanel snakePanel;
 	static JPanel optionsPanel;
+	static GameOptionsGUI optionsFormGUI = new GameOptionsGUI();
+	static JPanel gameOverPanel;
+	static GameOverGUI gameOverGUI = new GameOverGUI();
+
 	//Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
 	//http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
 	//http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
 
 	static SoundPlayer soundPlayer;
 
-	private static void createAndShowGUI() {
-		//Create and set up the window.
-		snakeFrame = new JFrame();
-		snakeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
-		snakeFrame.setUndecorated(true); //hide title bar
-		snakeFrame.setResizable(false);
-		snakeFrame.setFocusable(true);
-		snakeFrame.addKeyListener(new GameControls(snake));
+	protected static void displayOptionsGUI() {
+		if (gameStage == GAME_WON || gameStage == GAME_OVER) {
+			snakeFrame.remove(gameOverPanel);
+			gameStage = BEFORE_GAME;
+		}
 
 		// Show options GUI
-		GameOptionsGUI optionsFormGUI = new GameOptionsGUI();
 		optionsPanel = optionsFormGUI.rootPanel;
 		optionsPanel.setFocusable(true);
 		optionsPanel.requestFocusInWindow();
 		snakeFrame.add(optionsPanel);
-
-		snakeFrame.setVisible(true);
+		snakeFrame.validate();
+		snakeFrame.repaint();
 	}
 
 	protected static void displayGameGrid() {
@@ -98,6 +97,16 @@ public class SnakeGame {
 	}
 
 	private static void initializeOnStartup() {
+		//Create and set up the window.
+		snakeFrame = new JFrame();
+		snakeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
+		snakeFrame.setUndecorated(true); //hide title bar
+		snakeFrame.setResizable(false);
+		snakeFrame.setFocusable(true);
+		snakeFrame.addKeyListener(new GameControls(snake));
+		snakeFrame.setVisible(true);
+
 		soundPlayer = new SoundPlayer();
 		scoreManager = new ScoreManager();
 	}
@@ -123,9 +132,18 @@ public class SnakeGame {
 			public void run() {
 				initializeGame();
 				initializeOnStartup();
-				createAndShowGUI();
+				displayOptionsGUI();
 			}
 		});
+	}
+
+	protected static void displayGameOverGUI() {
+		snakeFrame.remove(snakePanel);
+
+		gameOverPanel = gameOverGUI.rootPanel;
+		snakeFrame.add(gameOverPanel);
+		snakeFrame.validate();
+		snakeFrame.repaint();
 	}
 
 	public static int getGameStage() {
@@ -148,17 +166,9 @@ public class SnakeGame {
 	public static void reset() {
 		gameStage = BEFORE_GAME;
 		GridSquares.reset();
-		snake.reset();
+		snake.createStartSnake();
 		currentScore = new Score();
 		foodManager = new FoodManager(snake, currentScore);
-	}
-
-	public static int getCurrentScore() {
-		return currentScore.points;
-	}
-
-	public static String getStringScore() {
-		return Integer.toString(currentScore.points);
 	}
 
 	// Getters & Setters for User Options
@@ -179,7 +189,7 @@ public class SnakeGame {
 		SnakeGame.warpWallsOn = warpWallsOn;
 	}
 
-	public static void setObstaclesOn(boolean obstaclesOn) {
-		SnakeGame.avocadosOn = obstaclesOn;
+	public static void setAvocadosOn(boolean avocadosOn) {
+		SnakeGame.avocadosOn = avocadosOn;
 	}
 }

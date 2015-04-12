@@ -43,6 +43,7 @@ public class GridSquares {
 
         screenXCenter = (int) maxX/2;
         screenYCenter = (int) maxY/2;
+        System.out.println("Screen X center: " + screenXCenter);
 
         //Create grid squares
         grid = new int[maxX][maxY];

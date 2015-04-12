@@ -33,13 +33,12 @@ public class Snake {
 
 		snakeHeadX = GridSquares.screenXCenter;
 		snakeHeadY = GridSquares.screenYCenter;
-
 		snakeSize = 3;
-
 		currentHeading = DIRECTION_LEFT;
 		lastHeading = DIRECTION_LEFT;
-		
 		justAteMustGrowThisMuch = 0;
+		hitWall = false;
+		ateTail = false;
 	}
 
 	public LinkedList<Point> segmentsToDraw(){
@@ -214,19 +213,6 @@ public class Snake {
 		return snakeHeadX == X && snakeHeadY == Y;
 	}
 
-//	public boolean isAdjacentToSnakeHead(int preyX, int preyY) {
-//
-//		int preyColumn = preyX %10;
-//		int snakeHeadColumn = snakeHeadX %10;
-//		if ((snakeHeadColumn == preyColumn || Math.abs(snakeHeadColumn - preyColumn) == 1) &&
-//				(snakeHeadY == preyY || Math.abs(snakeHeadY - preyY) == 1)) {
-//			return true;
-//
-//		} else {
-//			return false;
-//		}
-//	}
-
 	public String toString(){
 		String textSnake = "";
 
@@ -238,12 +224,6 @@ public class Snake {
 			textSnake += "\n";
 		}
 		return textSnake;
-	}
-
-	public void reset() {
-		hitWall = false;
-		ateTail = false;
-		createStartSnake();
 	}
 }
 
