@@ -64,6 +64,7 @@ public class DrawSnakeGamePanel extends JPanel {
 				break;
             }
             case SnakeGame.GAME_WON: {
+				SnakeGame.gameOverGUI.winDisplay();
 				SnakeGame.displayGameOverGUI();
                 break;
             }

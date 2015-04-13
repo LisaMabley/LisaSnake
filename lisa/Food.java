@@ -34,11 +34,14 @@ public abstract class Food {
                 // Generate random location
                 foodX = randomNumberGenerator.nextInt(SnakeGame.xSquares);
                 foodY = randomNumberGenerator.nextInt(SnakeGame.ySquares);
+                System.out.println("X squares " + SnakeGame.xSquares);
+                System.out.println("Y squares " + SnakeGame.ySquares);
 
                 // Check if location is empty
                 // If so, break out of while loop
                 if (FoodManager.isEmptySquare(foodX, foodY)) {
                     GridSquares.setSquare(foodX, foodY, GridSquares.CONTAINS_FOOD);
+                    System.out.println("Moving " + this.getClass() + " to " + foodX + ", " + foodY);
                     foundValidLocation = true;
                 }
             }

@@ -68,7 +68,6 @@ public class ScoreManager {
                     topScore.date = datePlayed;
                 }
                 topTenScores.add(topScore);
-                System.out.println("New top score: " + topScore);
 
                 // Read next line
                 line = buffReader.readLine();

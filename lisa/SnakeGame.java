@@ -102,6 +102,8 @@ public class SnakeGame {
 
 		xSquares = xPixelMaxDimension / squareSize;
 		ySquares = yPixelMaxDimension / squareSize;
+		System.out.println("Setting X squares to " + xSquares);
+		System.out.println("Setting Y squares to " + ySquares);
 		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
 		snake = new Snake();
 		currentScore = new Score();
@@ -129,6 +131,7 @@ public class SnakeGame {
 
 	protected static void displayGameGrid() {
 		// STEP 5: Display game grid
+		// Called by GameOptionsGUI when Play button clicked
 
 		snakeFrame.remove(optionsPanel);
 		snakePanel = new DrawSnakeGamePanel(snake);
@@ -143,6 +146,7 @@ public class SnakeGame {
 
 	protected static void newGame() {
 		// STEP 6: Start game clock and timer
+		// Called by displayGameGrid method
 
 		gameStage = DURING_GAME;
 		Timer timer = new Timer();
@@ -188,15 +192,6 @@ public class SnakeGame {
 
 	public static void setGameStage(int gameStage) {
 		SnakeGame.gameStage = gameStage;
-
-		switch (gameStage) {
-			case 3:
-				SoundPlayer.playLoseGameSound();
-				break;
-			case 4:
-				SoundPlayer.playWonGameSound();
-				break;
-		}
 	}
 
 	// Getters & Setters for User Options

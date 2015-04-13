@@ -20,7 +20,6 @@ public class Score implements Comparable<Score> {
 
 	public void increaseScore(int byHowMuch) {
 		points += byHowMuch;
-		System.out.println(points);
 	}
 
 	public int compareTo(Score score) {

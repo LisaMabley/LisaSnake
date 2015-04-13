@@ -22,35 +22,41 @@ public class GameClock extends TimerTask {
 
 		switch (stage) {
 			case SnakeGame.BEFORE_GAME: {
-				// Don't do anything, waiting for user to press a key to start
+				// Don't do anything
 				break;
 			}
 
 			case SnakeGame.DURING_GAME: {
-
 				snake.moveSnake();
 				if (SnakeGame.getGameStage() != SnakeGame.GAME_WON) {
 					FoodManager.updateFood();
 				}
+
 				break;
 			}
 
 			case SnakeGame.GAME_PAUSED: {
-				this.cancel();		// Stop the Timer
+				// Stop the Timer
+				this.cancel();
 				break;
 			}
 
 			case SnakeGame.GAME_OVER: {
-				this.cancel();		// Stop the Timer
-				break;	
+				// Stop the Timer and play lose sound
+				this.cancel();
+				SoundPlayer.playLoseGameSound();
+				break;
 			}
 
 			case SnakeGame.GAME_WON: {
-				this.cancel();   // Stop timer
+				// Stop timer and play win sound
+				this.cancel();
+				SoundPlayer.playWonGameSound();
 				break;
 			}
 		}
-				
-		gamePanel.repaint();		// In every circumstance, must update screen
+
+		// In every circumstance, must update screen
+		gamePanel.repaint();
 	}
 }
