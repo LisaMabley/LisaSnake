@@ -90,7 +90,7 @@ public class GameOptionsGUI {
             public void itemStateChanged(ItemEvent e) {
                 if (warpWallsOnCheckBox.isSelected()) {
                     SnakeGame.setWarpWallsOn(true);
-                    instructionsTextArea.setText("With warp walls turned on, you can exit on one side of the screen, only to reemerge on the opposite side.");
+                    instructionsTextArea.setText("With warp walls turned on, you can exit on one side of the screen, only to reemerge unscathed on the opposite side.");
 
                 } else {
                     SnakeGame.setWarpWallsOn(false);
@@ -104,7 +104,7 @@ public class GameOptionsGUI {
             public void itemStateChanged(ItemEvent e) {
                 if (avocadosOnCheckBox.isSelected()) {
                     SnakeGame.setAvocadosOn(true);
-                    instructionsTextArea.setText("Avocados can only be eaten during the small window when they turn bright green.");
+                    instructionsTextArea.setText("Delicious avocados are worth more points than kibble -- but they can only be eaten during the short period when they turn bright green.");
 
                 } else {
                     SnakeGame.setAvocadosOn(false);

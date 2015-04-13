@@ -27,8 +27,8 @@ public class GridSquares {
     // A positive number means part of the snake is in the square
     // The head of the snake is 1, rest of segments are numbered in order
 
-    // Set center of screen
-    // Cast just in case we have an odd number
+    // Set center square of screen
+    // Cast as int, just in case we have an odd number
     public static int screenXCenter;
     public static int screenYCenter;
 
@@ -46,6 +46,7 @@ public class GridSquares {
 
         //Create grid squares
         grid = new int[maxX][maxY];
+
         // And fill each with 0
         fillSnakeSquaresWithZeros();
     }

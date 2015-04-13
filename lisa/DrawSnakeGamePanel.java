@@ -135,9 +135,11 @@ public class DrawSnakeGamePanel extends JPanel {
 
 	private void displayUnpauseInstructions(Graphics g) {
 		// Display instructions for restarting paused game
+		int textX = (SnakeGame.xPixelMaxDimension / 2) - 40;
+		int textY = (SnakeGame.yPixelMaxDimension / 2) - 15;
 
-		g.drawString("GAME PAUSED", GridSquares.screenXCenter, GridSquares.screenYCenter);
-		g.drawString("Press R to resume", GridSquares.screenXCenter, GridSquares.screenYCenter - 40);
+		g.drawString("GAME PAUSED", textX, textY);
+		g.drawString("Press R to resume", textX - 10, textY + 25);
 	}
 }
 
