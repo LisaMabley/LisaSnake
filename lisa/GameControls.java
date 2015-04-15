@@ -15,12 +15,8 @@ public class GameControls implements KeyListener{
 
 		snake = SnakeGame.snake;
 
-		// Is game running? No? tell the game to draw grid and restart
+		// If game is not running, no need to move the Snake
 		if (SnakeGame.getGameStage() != SnakeGame.DURING_GAME){
-
-			// Need to start the timer and start the game again
-			SnakeGame.reset();
-			SnakeGame.displayOptionsGUI();
 			return;
 		}
 

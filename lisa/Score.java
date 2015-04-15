@@ -22,6 +22,7 @@ public class Score implements Comparable<Score> {
 		points += byHowMuch;
 	}
 
+	@Override
 	public int compareTo(Score score) {
 		// Scores are sorted by point value
 		double comparedValue = score.points;

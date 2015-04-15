@@ -12,14 +12,13 @@ public class GameOptionsGUI {
     public JPanel rootPanel;
     private JButton playButton;
     private JButton quitButton;
-    private JLabel sizeLabel;
     private JComboBox sizeComboBox;
     private JCheckBox soundEffectsOnCheckBox;
     private JCheckBox warpWallsOnCheckBox;
     private JCheckBox avocadosOnCheckBox;
-    private JLabel titleLabel;
     private JComboBox speedComboBox;
     private JTextArea instructionsTextArea;
+    // FINDBUGS: removed unused variables
 
     // Constructor
     public GameOptionsGUI() {

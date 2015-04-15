@@ -73,7 +73,6 @@ public class SnakeGame {
 	private static void initializeOnStartup() {
 		// STEP 2: Create and set up all elements
 		// that can persist over multiple games
-
 		snakeFrame = new JFrame();
 		snakeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
@@ -89,7 +88,6 @@ public class SnakeGame {
 
 		soundPlayer = new SoundPlayer();
 		scoreManager = new ScoreManager();
-		foodManager = new FoodManager();
 
 		gameOptionsGUI = new GameOptionsGUI();
 		gameOverGUI = new GameOverGUI();
@@ -99,22 +97,20 @@ public class SnakeGame {
 		// STEP 3: Set up snake and grid
 		// Called by SnakeGame at the beginning of each game
 		// Called by OptionsGUI when grid size is changed
-
 		xSquares = xPixelMaxDimension / squareSize;
 		ySquares = yPixelMaxDimension / squareSize;
-		System.out.println("Setting X squares to " + xSquares);
-		System.out.println("Setting Y squares to " + ySquares);
 		gridSquares = new GridSquares(xSquares, ySquares, squareSize);
 		snake = new Snake();
 		currentScore = new Score();
+		foodManager = new FoodManager();
 	}
 
 	protected static void displayOptionsGUI() {
 		// STEP 4: Display game options GUI
 		// Called by SnakeGame at the beginning of play
+		// Called by GameOverGUI when Play Again button pressed
 
-		// If this is not first round of play,
-		// remove game over panel
+		// If this is not first round of play, remove game over panel
 		if (gameStage == GAME_OVER || gameStage == GAME_WON) {
 			snakeFrame.remove(gameOverPanel);
 			gameStage = BEFORE_GAME;
@@ -132,7 +128,6 @@ public class SnakeGame {
 	protected static void displayGameGrid() {
 		// STEP 5: Display game grid
 		// Called by GameOptionsGUI when Play button clicked
-
 		snakeFrame.remove(optionsPanel);
 		snakePanel = new DrawSnakeGamePanel(snake);
 		snakeFrame.add(snakePanel);
@@ -147,7 +142,6 @@ public class SnakeGame {
 	protected static void newGame() {
 		// STEP 6: Start game clock and timer
 		// Called by displayGameGrid method
-
 		gameStage = DURING_GAME;
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
@@ -158,7 +152,6 @@ public class SnakeGame {
 	public static void resumePausedGame() {
 		// OPTIONAL: If game is ever paused,
 		// Create new game clock and timer to restart game
-
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0, clockInterval);
@@ -166,7 +159,6 @@ public class SnakeGame {
 
 	protected static void displayGameOverGUI() {
 		// STEP 7: Display score & high scores in GameOver GUI
-
 		snakeFrame.remove(snakePanel);
 
 		gameOverPanel = gameOverGUI.rootPanel;
@@ -179,10 +171,11 @@ public class SnakeGame {
 
 	public static void reset() {
 		// STEP 8: Reset and repeat, if desired
-
+		// Called by GameOverGUI when Play Again button pressed
 		GridSquares.reset();
 		snake.createStartSnake();
 		currentScore = new Score();
+		foodManager.reset();
 	}
 
 	// Game stage getter and setter

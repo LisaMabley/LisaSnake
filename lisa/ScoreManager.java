@@ -22,7 +22,7 @@ public class ScoreManager {
     private static LinkedList<Score> topTenScores;
 
     // First set format for dates
-    public static String datePattern = "MM/dd/yy";
+    public static final String datePattern = "MM/dd/yy";
     public static SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
 
     public ScoreManager() {

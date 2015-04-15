@@ -10,13 +10,15 @@ public class FoodManager {
     protected static Kibble kibble;
     protected static ArrayList<Avocado> avocados;
     protected static Avocado eatenAvocado;
-    // 1 in 25 chance of new avocado each turn
-    private static int avocadoProbability = 25;
+    protected static ArrayList<Avocado> disappearingAvocados;
+    // 1 in 20 chance of new avocado each turn
+    private static int avocadoProbability = 20;
 
     // Constructor
     public FoodManager() {
         kibble = new Kibble();
         avocados = new ArrayList<Avocado>();
+        disappearingAvocados = new ArrayList<Avocado>();
 
         if (SnakeGame.avocadosOn) {
             Avocado newAvocado = new Avocado();
@@ -38,15 +40,23 @@ public class FoodManager {
             if (randomChoice == 0) {
                 Avocado newAvocado = new Avocado();
                 avocados.add(newAvocado);
+
+                // reduce avocado probability
+                avocadoProbability ++;
             }
 
             if (!avocados.isEmpty()) {
                 for (Avocado avocado : avocados) {
                     avocado.incrementRipeness();
 
-                    if (didSnakeEat(avocado) && avocado.isEdible) {
+                    if (avocado.age == avocado.maxAge) {
+                        disappearingAvocados.add(avocado);
+                    }
+
+                    if (didSnakeEat(avocado) && avocado.isAvocadoEdible()) {
                         SnakeGame.snake.justAteMustGrowThisMuch += avocado.growthIncrement;
                         eatenAvocado = avocado;
+                        avocadoProbability ++;
 
                     } else if (didSnakeEat(avocado)) {
                         SnakeGame.setGameStage(SnakeGame.GAME_OVER);
@@ -56,6 +66,12 @@ public class FoodManager {
                 if (eatenAvocado != null) {
                     avocados.remove(eatenAvocado);
                     eatenAvocado = null;
+                }
+
+                if (!disappearingAvocados.isEmpty()) {
+                    for (Avocado oldAvocado : disappearingAvocados)
+                    avocados.remove(oldAvocado);
+                    disappearingAvocados.clear();
                 }
             }
         }
@@ -80,5 +96,10 @@ public class FoodManager {
             return true;
         }
         return false;
+    }
+
+    protected void reset() {
+        avocados.clear();
+        avocadoProbability = 20;
     }
 }

@@ -48,7 +48,9 @@ public class DrawSnakeGamePanel extends JPanel {
          */
 
         gameStage = SnakeGame.getGameStage();
-        
+
+        // FINDBUGS recommends I change switch statement without
+		// default case
         switch (gameStage) {
 			case SnakeGame.GAME_PAUSED: {
 				displayUnpauseInstructions(g);
@@ -106,13 +108,13 @@ public class DrawSnakeGamePanel extends JPanel {
 		int kibbleY = FoodManager.kibble.getFoodY() * SnakeGame.squareSize;
 		graphics.fillRect(kibbleX + 1, kibbleY + 1, SnakeGame.squareSize - 1, SnakeGame.squareSize - 1);
 
-		// If obstacle option is on, draw avocados
+		// If avocado option is on, draw avocados
 		if (SnakeGame.avocadosOn) {
 			for (Avocado avocado : FoodManager.avocados) {
 				int avocadoX = avocado.getFoodX() * SnakeGame.squareSize;
 				int avocadoY = avocado.getFoodY() * SnakeGame.squareSize;
 				graphics.setColor(avocado.displayColor);
-				graphics.fillRect(avocadoX+1, avocadoY+1, SnakeGame.squareSize-1, SnakeGame.squareSize-1);
+				graphics.fillRect(avocadoX + 1, avocadoY + 1, SnakeGame.squareSize - 1, SnakeGame.squareSize - 1);
 			}
 		}
 	}
@@ -127,7 +129,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		g.fillRect((int)head.getX(), (int)head.getY(), SnakeGame.squareSize, SnakeGame.squareSize);
 		
 		//Draw rest of snake in black
-		g.setColor(Color.GREEN);
+		g.setColor(snake.snakeColor);
 		for (Point p : coordinates) {
 			g.fillRect((int)p.getX(), (int)p.getY(), SnakeGame.squareSize, SnakeGame.squareSize);
 		}

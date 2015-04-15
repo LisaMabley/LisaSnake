@@ -5,12 +5,12 @@ import java.util.TimerTask;
 public class GameClock extends TimerTask {
 
 	Snake snake;
-	Score score;
 	DrawSnakeGamePanel gamePanel;
+	// FINDBUGS: Deleted unused field score here.
+	// only start new game if timer is cancelled
 
 	public GameClock(Snake snake, Score score, DrawSnakeGamePanel gamePanel){
 		this.snake = snake;
-		this.score = score;
 		this.gamePanel = gamePanel;
 	}
 	

@@ -21,7 +21,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
       </vspacer>
-      <component id="5c713" class="javax.swing.JLabel" binding="titleLabel">
+      <component id="5c713" class="javax.swing.JLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
@@ -90,7 +90,7 @@
           <text value="Speed"/>
         </properties>
       </component>
-      <component id="201f0" class="javax.swing.JLabel" binding="sizeLabel">
+      <component id="201f0" class="javax.swing.JLabel">
         <constraints>
           <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag top="10" left="15" bottom="0" right="10" weightx="0.0" weighty="0.0"/>

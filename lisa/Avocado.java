@@ -12,7 +12,9 @@ public class Avocado extends Food {
     private static int ripenessDuration = 5;
     private int willBeRipeForThisMuchLonger;
     private int ripeness;
-    public boolean isEdible = false;
+    protected int age;
+    protected static int maxAge = 65;
+    private boolean isEdible = false;
     private static Color unripeColor = new Color(51, 51, 0);
     private static Color ripeColor = new Color(86, 130, 3);
     private static Color overripeColor = new Color(180, 200, 130);
@@ -31,32 +33,36 @@ public class Avocado extends Food {
     public void incrementRipeness() {
         // Updates an avocado's ripeness each clock tick
         this.ripeness ++;
+        this.age ++;
 
         // Sets avocado color and isEdible if correct duration has elapsed
         if (this.ripeness == timeToRipen) {
             this.isEdible = true;
             this.displayColor = ripeColor;
 
-        // If avocado is already ripe,
-        // increments how long it should remain ripe
+        // If avocado is already ripe, increments how long it should remain ripe
         } else if (ripeness > timeToRipen) {
             this.willBeRipeForThisMuchLonger --;
         }
 
-        switch (this.willBeRipeForThisMuchLonger) {
+        // FINDBUGS
+        // This used to be a switch statement without a
+        // default case. I changed it to if/else if to correct.
+        if (this.willBeRipeForThisMuchLonger == 1) {
             // Changes to warning color one clock tick
             // before changing back to unripe
-            case 1:
-                this.displayColor = overripeColor;
-                break;
+            this.displayColor = overripeColor;
 
+        } else if (this.willBeRipeForThisMuchLonger == 0) {
             // Changes avocado back to unripe
-            case 0:
-                this.isEdible = false;
-                this.ripeness = 0;
-                this.willBeRipeForThisMuchLonger = ripenessDuration;
-                this.displayColor = unripeColor;
-                break;
+            this.isEdible = false;
+            this.ripeness = 0;
+            this.willBeRipeForThisMuchLonger = ripenessDuration;
+            this.displayColor = unripeColor;
         }
+    }
+
+    public boolean isAvocadoEdible() {
+        return this.isEdible;
     }
 }

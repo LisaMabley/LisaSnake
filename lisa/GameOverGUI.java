@@ -63,6 +63,7 @@ public class GameOverGUI {
         endTitleLabel.setForeground(Color.BLACK);
         rootPanel.setBackground(grayish);
         highScoreTextArea.setBackground(grayish);
+        highScoreTextArea.setText("");
     }
 
     public void displayScoresInGUI() {

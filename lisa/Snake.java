@@ -1,9 +1,11 @@
 package lisa;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.LinkedList;
 
 public class Snake {
+
+	protected static Color snakeColor = new Color(51, 0, 102, 95);
 
 	final int DIRECTION_UP = 0;
 	final int DIRECTION_DOWN = 1;
@@ -16,9 +18,9 @@ public class Snake {
 	private int currentHeading;  //Direction snake is going in, or direction user is telling snake to go
 	private int lastHeading;    //Last confirmed movement of snake. See moveSnake method
 	
-	private int snakeSize;   //size of snake - how many segments?
+	protected int snakeSize;   //size of snake - how many segments?
 
-	public int justAteMustGrowThisMuch = 0;
+	protected int justAteMustGrowThisMuch = 0;
 
 	private int snakeHeadX, snakeHeadY; //store coordinates of head - first segment
 
@@ -220,6 +222,14 @@ public class Snake {
 		for (int y = 0 ; y < GridSquares.maxY ; y++) {
 			for (int x = 0 ; x < GridSquares.maxX ; x++){
 				textSnake = textSnake + GridSquares.grid[x][y];
+
+
+				// FIND BUGS: Change to
+//				StringBuffer buf = new StringBuffer();
+//				for (int i = 0; i < field.length; ++i) {
+//					buf.append(field[i]);
+//				}
+//				String s = buf.toString();
 			}
 			textSnake += "\n";
 		}
