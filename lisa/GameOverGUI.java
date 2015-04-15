@@ -28,6 +28,7 @@ public class GameOverGUI {
         submitNameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Adds player entry in name field and score to top score list onscreen
                 String playerName = playerNameTextField.getText();
                 SnakeGame.currentScore.setName(playerName);
                 ScoreManager.updateTopScoresFile();
@@ -40,6 +41,8 @@ public class GameOverGUI {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // FINDBUGS does not like this call to exit
+
                 System.exit(0);
             }
         });
@@ -67,27 +70,38 @@ public class GameOverGUI {
     }
 
     public void displayScoresInGUI() {
+        // Display current game score
         currentScoreLabel.setText(Integer.toString(SnakeGame.currentScore.points));
 
+        // Display top ten scores
         topTenScores = ScoreManager.getTopTenScores();
-        String topScoresDisplay = "";
+        // FINDBUGS suggested this method of using StringBuilder
+        // instead of concatenating string in a loop
+        StringBuilder sb = new StringBuilder();
+        String scoreLineString = "";
         for (int x = 0; x < topTenScores.size(); x ++) {
             Score topScore = topTenScores.get(x);
             String ordinal = Integer.toString(x + 1);
             String date = ScoreManager.dateFormat.format(topScore.date);
 
-            topScoresDisplay += ordinal + ". " + topScore.points + " points: " + topScore.name + ", " + date + "\n";
+            scoreLineString = ordinal + ". " + topScore.points + " points: " + topScore.name + ", " + date + "\n";
+            sb.append(scoreLineString);
         }
+        String topScoresDisplay = sb.toString();
 
         highScoreTextArea.setText(topScoresDisplay);
     }
 
     public void newHighScore() {
+        // Adjusts GUI if player has achieved a new high score
+
+        // These elements allow the player to enter her name for the high score list
         highScoreInstructionLabel1.setVisible(true);
         highScoreInstructionLabel2.setVisible(true);
         playerNameTextField.setVisible(true);
         submitNameButton.setVisible(true);
 
+        // Only display high score message if game has not been won
         if (SnakeGame.getGameStage() != SnakeGame.GAME_WON) {
             endTitleLabel.setText("NEW HIGH SCORE!");
         }

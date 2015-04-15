@@ -77,13 +77,9 @@ public class FoodManager {
         }
     }
 
-    public static boolean isEmptySquare(int X, int Y) {
-        return GridSquares.getSquareValue(X, Y) == GridSquares.EMPTY;
-    }
-
     private static boolean didSnakeEat(Food food) {
         //Is any food in the snake? It would be in the same square as the snake's head
-        if (SnakeGame.snake.isSnakeHead(food.foodX, food.foodY)) {
+        if (GridSquares.getSquareValue(food.foodX,food.foodY) == GridSquares.SNAKE_HEAD) {
             // If so, play sound and update game points
             SoundPlayer.playEatSound();
             SnakeGame.currentScore.increaseScore(food.pointsForEating);

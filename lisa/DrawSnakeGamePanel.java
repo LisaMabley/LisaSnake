@@ -5,10 +5,8 @@ import java.awt.image.ImageObserver;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 
-/** This class responsible for displaying the graphics, so the snake, grid, kibble, instruction text and high points
- * 
+/** This class responsible for displaying the graphics in the DURING_GAME state: the snake, grid, kibble and avocados
  * @author Clara
- *
  */
 
 public class DrawSnakeGamePanel extends JPanel {

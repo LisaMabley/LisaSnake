@@ -9,6 +9,7 @@ public class SnakeGame {
 	public static int xPixelMaxDimension = 601;
 	public static int yPixelMaxDimension = 601;
 
+	// Number of squares in grid
 	public static int xSquares;
 	public static int ySquares;
 

@@ -37,7 +37,7 @@ public abstract class Food {
 
                 // Check if location is empty
                 // If so, break out of while loop
-                if (FoodManager.isEmptySquare(foodX, foodY)) {
+                if (GridSquares.getSquareValue(foodX, foodY) == GridSquares.EMPTY) {
                     GridSquares.setSquare(foodX, foodY, GridSquares.CONTAINS_FOOD);
                     foundValidLocation = true;
                 }

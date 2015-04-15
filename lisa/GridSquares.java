@@ -10,7 +10,7 @@ public class GridSquares {
     // Represent square content
     static final int CONTAINS_FOOD = -1;
     static final int EMPTY = 0;
-//    static final int SNAKE_HEAD = 1;
+    static final int SNAKE_HEAD = 1;
 //    static final int SNAKESEGMENT_HORIZ = 2;
 //    static final int SNAKESEGMENT_VERT = 3;
 //    static final int SNAKECORNER_1 = 4;

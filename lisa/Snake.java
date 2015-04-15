@@ -178,7 +178,7 @@ public class Snake {
 		}
 
 		//Does this make the snake eat its tail?
-		if (GridSquares.getSquareValue(snakeHeadX, snakeHeadY) != 0) {
+		if (GridSquares.getSquareValue(snakeHeadX, snakeHeadY) != GridSquares.EMPTY) {
 
 			ateTail = true;
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
@@ -209,10 +209,6 @@ public class Snake {
 		}
 		
 		lastHeading = currentHeading; //Update last confirmed heading
-	}
-
-	public boolean isSnakeHead(int X, int Y) {
-		return snakeHeadX == X && snakeHeadY == Y;
 	}
 
 	public String toString(){

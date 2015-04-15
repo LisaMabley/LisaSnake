@@ -1,19 +1,20 @@
 package lisa;
 
-// Created by lisa on 4/6/15.
+/** Created by lisa on 4/6/15.
+ * Avocados are just obstacles, not food, except during a momentary interval when they are ripe.
+ * Each time a new one is placed, or one is eaten by the snake, they become less likely to appear.
+ * They disappear altogether after a set interval. **/
 
 import java.awt.*;
 
 public class Avocado extends Food {
-    // Avocados are just obstacles, not food
-    // Except during a momentary interval when they are ripe
 
     private static int timeToRipen = 15;
     private static int ripenessDuration = 5;
     private int willBeRipeForThisMuchLonger;
     private int ripeness;
     protected int age;
-    protected static int maxAge = 65;
+    protected static int maxAge = 75;
     private boolean isEdible = false;
     private static Color unripeColor = new Color(51, 51, 0);
     private static Color ripeColor = new Color(86, 130, 3);
@@ -49,12 +50,11 @@ public class Avocado extends Food {
         // This used to be a switch statement without a
         // default case. I changed it to if/else if to correct.
         if (this.willBeRipeForThisMuchLonger == 1) {
-            // Changes to warning color one clock tick
-            // before changing back to unripe
+            // Changes to warning color one clock tick before changing back to unripe
             this.displayColor = overripeColor;
 
         } else if (this.willBeRipeForThisMuchLonger == 0) {
-            // Changes avocado back to unripe
+            // Changes avocado back to unripe if has been ripe for ripenessDuration
             this.isEdible = false;
             this.ripeness = 0;
             this.willBeRipeForThisMuchLonger = ripenessDuration;
@@ -62,6 +62,7 @@ public class Avocado extends Food {
         }
     }
 
+    // Getter
     public boolean isAvocadoEdible() {
         return this.isEdible;
     }
