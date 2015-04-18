@@ -10,8 +10,7 @@ public class GameControls implements KeyListener{
 	public void keyPressed(KeyEvent ev) {
 
 		// keyPressed events are for catching events like function keys, enter, arrow keys
-		// We want to listen for arrow keys to move snake
-		// Has to id if user pressed arrow key, and if so, send info to lisa.Snake object
+		// We want to listen for arrow keys to move snake and if so, send info to Snake object
 
 		snake = SnakeGame.snake;
 
@@ -36,25 +35,26 @@ public class GameControls implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent ev) {
-		//We don't care about keyReleased events, but are required to implement this method anyway.		
+		// We don't care about keyReleased events, but are required to implement this method anyway.
 	}
 
 	@Override
 	public void keyTyped(KeyEvent ev) {
-		//keyTyped events are for user typing letters on the keyboard, anything that makes a character display on the screen
+		// keyTyped events are for user typing letters on the keyboard, anything that makes a character display on the screen
 		char keyPressed = ev.getKeyChar();
 		char q = 'q';
 		char p = 'p';
 		char r = 'r';
 		if (keyPressed == q) {
-			System.exit(0);    //quit if user presses the q key.
+			// Quit if user presses the q key.
+			System.exit(0);
 
 		} else if (keyPressed == p) {
 			// Pause if user presses the P key
 			SnakeGame.setGameStage(SnakeGame.GAME_PAUSED);
 
 		} else if (keyPressed == r) {
-			// Restart if user presses the R key
+			// Restart paused game if user presses the R key
 			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
 			SnakeGame.resumePausedGame();
 		}

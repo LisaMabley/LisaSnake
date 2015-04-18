@@ -36,7 +36,6 @@ public class Score implements Comparable<Score> {
 
 	public String toString() {
 		// Creates top score record to be written to file
-
 		String dateString = ScoreManager.dateFormat.format(this.date);
 		return Integer.toString(points) + ":" + this.name + ":" + dateString;
 	}

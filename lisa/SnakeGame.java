@@ -31,20 +31,20 @@ public class SnakeGame {
 	static final int DURING_GAME = 2;
 	static final int GAME_OVER = 3;
 	static final int GAME_WON = 4;
-	//The values are not important. The important thing is to use the constants
-	//instead of the values so you are clear what you are setting. Easy to forget what number is Game over vs. game won
-	//Using constant names instead makes it easier to keep it straight. Refer to these variables 
-	//using statements such as lisa.SnakeGame.GAME_OVER
+	// The values are not important. The important thing is to use the constants
+	// instead of the values so you are clear what you are setting. Easy to forget what number is Game over vs. game won
+	// Using constant names instead makes it easier to keep it straight. Refer to these variables
+	// using statements such as SnakeGame.GAME_OVER
 
 	private static int gameStage = BEFORE_GAME;
 	// Use this to figure out what should be happening.
-	//Other classes like Snake and DrawSnakeGamePanel will need to query this, and change it's value
+	// Other classes like Snake and DrawSnakeGamePanel will need to query this, and change its value
 
 	protected static long clockInterval = 500;
-	//controls game speed
-	//Every time the clock ticks, the snake moves
-	//This is the time between clock ticks, in milliseconds
-	//1000 milliseconds = 1  second.
+	// Controls game speed
+	// Every time the clock ticks, the snake moves
+	// This is the time between clock ticks, in milliseconds
+	// 1000 milliseconds = 1  second.
 
 	static JFrame snakeFrame;
 	static DrawSnakeGamePanel snakePanel;
@@ -53,15 +53,14 @@ public class SnakeGame {
 	static GameOptionsGUI gameOptionsGUI;
 	static GameOverGUI gameOverGUI;
 
-	//Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
-	//http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
-	//http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
+	// Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
+	// http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
+	// http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
 
 	static SoundPlayer soundPlayer;
 
 	public static void main(String[] args) {
 		// STEP 1: Schedule a job for the event-dispatching thread
-
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				initializeOnStartup();
@@ -72,8 +71,7 @@ public class SnakeGame {
 	}
 
 	private static void initializeOnStartup() {
-		// STEP 2: Create and set up all elements
-		// that can persist over multiple games
+		// STEP 2: Create and set up all elements that can persist over multiple games
 		snakeFrame = new JFrame();
 		snakeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
@@ -145,7 +143,7 @@ public class SnakeGame {
 		// Called by displayGameGrid method
 		gameStage = DURING_GAME;
 		Timer timer = new Timer();
-		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
+		GameClock clockTick = new GameClock(snake, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0, clockInterval);
 		snakePanel.repaint();
 	}
@@ -154,7 +152,7 @@ public class SnakeGame {
 		// OPTIONAL: If game is ever paused,
 		// Create new game clock and timer to restart game
 		Timer timer = new Timer();
-		GameClock clockTick = new GameClock(snake, currentScore, snakePanel);
+		GameClock clockTick = new GameClock(snake, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0, clockInterval);
 	}
 

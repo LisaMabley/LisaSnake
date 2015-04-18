@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class FoodManager {
+    // Responsible for keeping track of where all food objects
+    // are in the game grid, updating them each clock tick
+    // and determining if the snake has eaten any of them
 
     protected static Kibble kibble;
     protected static ArrayList<Avocado> avocados;
@@ -41,34 +44,42 @@ public class FoodManager {
                 Avocado newAvocado = new Avocado();
                 avocados.add(newAvocado);
 
-                // reduce avocado probability
+                // Reduce avocado probability
+                // Useful as fewer open squares remain on GameGrid
                 avocadoProbability ++;
             }
 
             if (!avocados.isEmpty()) {
                 for (Avocado avocado : avocados) {
+                    // Update each avocado's ripeness
                     avocado.incrementRipeness();
 
                     if (avocado.age == avocado.maxAge) {
+                        // Mark any that have reached max age for later removal
                         disappearingAvocados.add(avocado);
                     }
 
                     if (didSnakeEat(avocado) && avocado.isAvocadoEdible()) {
+                        // Snake ate edible avocado, good for him!
                         SnakeGame.snake.justAteMustGrowThisMuch += avocado.growthIncrement;
                         eatenAvocado = avocado;
                         avocadoProbability ++;
 
                     } else if (didSnakeEat(avocado)) {
+                        // Snake ate inedible avocado, game over
                         SnakeGame.setGameStage(SnakeGame.GAME_OVER);
                     }
                 }
 
                 if (eatenAvocado != null) {
+                    // Now that we're done iterating over avocado list,
+                    // it's safe to remove the one that's been eaten
                     avocados.remove(eatenAvocado);
                     eatenAvocado = null;
                 }
 
                 if (!disappearingAvocados.isEmpty()) {
+                    // Also remove any that have reached their maxAge
                     for (Avocado oldAvocado : disappearingAvocados)
                     avocados.remove(oldAvocado);
                     disappearingAvocados.clear();
@@ -95,6 +106,7 @@ public class FoodManager {
     }
 
     protected void reset() {
+        // Reset foodManager for new game
         avocados.clear();
         avocadoProbability = 20;
     }

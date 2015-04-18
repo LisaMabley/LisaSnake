@@ -42,7 +42,6 @@ public class GameOverGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // FINDBUGS does not like this call to exit
-
                 System.exit(0);
             }
         });
@@ -58,6 +57,7 @@ public class GameOverGUI {
     }
 
     private void resetScreen() {
+        // Reset screen before starting a new game
         endTitleLabel.setText("GAME OVER");
         highScoreInstructionLabel1.setVisible(false);
         highScoreInstructionLabel2.setVisible(false);
@@ -66,25 +66,23 @@ public class GameOverGUI {
         endTitleLabel.setForeground(Color.BLACK);
         rootPanel.setBackground(grayish);
         highScoreTextArea.setBackground(grayish);
-        highScoreTextArea.setText("");
+        displayScoresInGUI();
     }
 
     public void displayScoresInGUI() {
         // Display current game score
         currentScoreLabel.setText(Integer.toString(SnakeGame.currentScore.points));
-
         // Display top ten scores
         topTenScores = ScoreManager.getTopTenScores();
         // FINDBUGS suggested this method of using StringBuilder
         // instead of concatenating string in a loop
         StringBuilder sb = new StringBuilder();
-        String scoreLineString = "";
-        for (int x = 0; x < topTenScores.size(); x ++) {
+        for (int x = 0; x < 10; x ++) {
             Score topScore = topTenScores.get(x);
             String ordinal = Integer.toString(x + 1);
             String date = ScoreManager.dateFormat.format(topScore.date);
 
-            scoreLineString = ordinal + ". " + topScore.points + " points: " + topScore.name + ", " + date + "\n";
+            String scoreLineString = ordinal + ". " + topScore.points + " points: " + topScore.name + ", " + date + "\n";
             sb.append(scoreLineString);
         }
         String topScoresDisplay = sb.toString();

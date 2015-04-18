@@ -8,24 +8,13 @@ public class GridSquares {
     public static int maxX, maxY;
 
     // Represent square content
-    static final int CONTAINS_FOOD = -1;
-    static final int EMPTY = 0;
-    static final int SNAKE_HEAD = 1;
-//    static final int SNAKESEGMENT_HORIZ = 2;
-//    static final int SNAKESEGMENT_VERT = 3;
-//    static final int SNAKECORNER_1 = 4;
-//    static final int SNAKECORNER_2 = 5;
-//    static final int SNAKECORNER_3 = 6;
-//    static final int SNAKECORNER_4 = 7;
-//    static final int SNAKETAIL_UP = 8;
-//    static final int SNAKETAIL_DWN = 9;
-//    static final int SNAKETAIL_LFT = 10;
-//    static final int SNAKETAIL_RT = 11;
-
-
+    // Any square containing food has a value of -1
     // A 0 means there is nothing in this square
     // A positive number means part of the snake is in the square
     // The head of the snake is 1, rest of segments are numbered in order
+    static final int CONTAINS_FOOD = -1;
+    static final int EMPTY = 0;
+    static final int SNAKE_HEAD = 1;
 
     // Set center square of screen
     // Cast as int, just in case we have an odd number
@@ -36,6 +25,7 @@ public class GridSquares {
     // Representing all squares on the screen
     public static int grid[][];
 
+    // Constructor
     public GridSquares(int X, int Y, int size) {
         maxX = X;
         maxY = Y;
@@ -80,8 +70,8 @@ public class GridSquares {
     }
 
     public static boolean wonGame() {
-        //If all of the squares have snake segments in, the snake has eaten so much kibble
-        //that it has filled the screen. Win!
+        // If none of the squares are empty, the snake has eaten so much kibble
+        // that it has filled the screen. Win!
 
         for (int x = 0 ; x < maxX ; x++) {
             for (int y = 0 ; y < maxY ; y++){
@@ -92,7 +82,7 @@ public class GridSquares {
             }
         }
 
-        // But if we get here, the snake has filled the screen. win!
+        // But if we get here, the snake has filled the screen. Win!
         SnakeGame.setGameStage(SnakeGame.GAME_WON);
         return true;
     }

@@ -1,7 +1,6 @@
 package lisa;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 
@@ -14,21 +13,10 @@ public class DrawSnakeGamePanel extends JPanel {
 	private int gameStage;  //use this to figure out what to paint
 	
 	private Snake snake;
-//	private boolean imagesOn = true;
-//	private Image image;
-//	private ImageObserver imageObserver;
 
 	// Constructor
 	DrawSnakeGamePanel(Snake snake) {
 		this.snake = snake;
-
-//		try {
-//			image = ImageIO.read(new File("Snake.gif"));
-//
-//		} catch (IOException e) {
-//			System.out.println("Cannot find image files");
-//			imagesOn = false;
-//		}
 	}
 	
 	public Dimension getPreferredSize() {
@@ -36,26 +24,18 @@ public class DrawSnakeGamePanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);       
-
-        /* Where are we at in the game? 4 phases.. 
-         * 1. Before game starts
-         * 2. During game
-         * 3. Game lost aka game over
-         * 4. or, game won
-         */
+        super.paintComponent(g);
 
         gameStage = SnakeGame.getGameStage();
 
-        // FINDBUGS recommends I change switch statement without
-		// default case
+        // FINDBUGS recommended I change switch
+        // statement without default case
         switch (gameStage) {
 			case SnakeGame.GAME_PAUSED: {
 				displayUnpauseInstructions(g);
 				break;
 			}
             case SnakeGame.DURING_GAME: {
-//				g.drawImage(image, 100, 100, imageObserver);
 				displayGame(g);
                 break;
             }
@@ -68,6 +48,12 @@ public class DrawSnakeGamePanel extends JPanel {
 				SnakeGame.displayGameOverGUI();
                 break;
             }
+			default: {
+				// If we somehow end up here, I'd like to know about it!
+				System.out.println("Running default option in switch statement in DrawSnakeGamePanel's paintComponent method.");
+				displayGame(g);
+				break;
+			}
         }
     }
 
@@ -118,7 +104,7 @@ public class DrawSnakeGamePanel extends JPanel {
 	}
 
 	private void displaySnake(Graphics g) {
-
+		// Draw snake
 		LinkedList<Point> coordinates = snake.segmentsToDraw();
 		
 		//Draw head in grey

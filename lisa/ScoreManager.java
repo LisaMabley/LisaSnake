@@ -40,7 +40,6 @@ public class ScoreManager {
 
             while (line != null) {
                 // Iterate through lines until there are none left
-
                 splitLine = line.split(":");
 
                 int numberPoints = Integer.parseInt(splitLine[0]);
@@ -51,7 +50,6 @@ public class ScoreManager {
                     // Set format for dates
                     String datePattern = "MM/dd/yy";
                     SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
-
                     datePlayed = dateFormat.parse(splitLine[2]);
 
 
@@ -79,6 +77,7 @@ public class ScoreManager {
             System.out.println("Could not open or read TopScores.txt");
             System.out.println(ioe.toString());
         }
+        // Sort on score order, highest score first
         Collections.sort(topTenScores, Collections.reverseOrder());
         if (!topTenScores.isEmpty()) {
             lowestHighScore = topTenScores.getLast().points;
@@ -86,13 +85,18 @@ public class ScoreManager {
     }
 
     public static void checkIfNewHighScore(Score newScore) {
+        // Check to see if a given score is higher than the lowest high score
 
         if (newScore.points > lowestHighScore) {
+            // Which means the lowest bumps off the list and this one should be added
             updateHighScores(newScore);
         }
     }
 
     protected static void updateHighScores(Score newHighScore) {
+        // This can be called more than once for the same score
+        // (if player corrects her name entry, for example)
+        // so we need to make sure we don't add duplicates
         if (!topTenScores.contains(newHighScore)) {
             topTenScores.add(newHighScore);
             Collections.sort(topTenScores, Collections.reverseOrder());
@@ -107,7 +111,6 @@ public class ScoreManager {
 
     protected static void updateTopScoresFile() {
         // When top scores change, update the entire file
-
         try {
             // Initialize the buffered writer
             FileWriter writer = new FileWriter("TopScores.txt");

@@ -8,7 +8,7 @@ public class GameClock extends TimerTask {
 	DrawSnakeGamePanel gamePanel;
 	// FINDBUGS: Deleted unused field score here.
 
-	public GameClock(Snake snake, Score score, DrawSnakeGamePanel gamePanel){
+	public GameClock(Snake snake, DrawSnakeGamePanel gamePanel){
 		this.snake = snake;
 		this.gamePanel = gamePanel;
 	}
@@ -16,7 +16,6 @@ public class GameClock extends TimerTask {
 	@Override
 	public void run() {
 		// This method will be called every clock tick
-						
 		int stage = SnakeGame.getGameStage();
 
 		switch (stage) {
@@ -27,6 +26,7 @@ public class GameClock extends TimerTask {
 
 			case SnakeGame.DURING_GAME: {
 				snake.moveSnake();
+				// Don't update food if game has been won
 				if (SnakeGame.getGameStage() != SnakeGame.GAME_WON) {
 					FoodManager.updateFood();
 				}
