@@ -42,7 +42,7 @@ public class GameClock extends TimerTask {
 
 			case SnakeGame.GAME_OVER: {
 				// Stop the Timer and play lose sound
-				this.cancel();
+                this.cancel();
 				SoundPlayer.playLoseGameSound();
 				break;
 			}

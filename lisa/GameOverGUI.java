@@ -32,7 +32,7 @@ public class GameOverGUI {
                 String playerName = playerNameTextField.getText();
                 SnakeGame.currentScore.setName(playerName);
                 ScoreManager.updateTopScoresFile();
-                displayScoresInGUI();
+                displayScoresInGUI(); // not working
                 playerNameTextField.setText("");
                 SnakeGame.snakeFrame.repaint();
             }
@@ -76,18 +76,39 @@ public class GameOverGUI {
         topTenScores = ScoreManager.getTopTenScores();
         // FINDBUGS suggested this method of using StringBuilder
         // instead of concatenating string in a loop
-        StringBuilder sb = new StringBuilder();
-        for (int x = 0; x < 10; x ++) {
-            Score topScore = topTenScores.get(x);
-            String ordinal = Integer.toString(x + 1);
-            String date = ScoreManager.dateFormat.format(topScore.date);
+        if (topTenScores.isEmpty()) {
+            // First high score has just been recorded
+            highScoreTextArea.setText("1. " + SnakeGame.currentScore.points + " points, " + SnakeGame.currentScore.date.toString());
 
-            String scoreLineString = ordinal + ". " + topScore.points + " points: " + topScore.name + ", " + date + "\n";
-            sb.append(scoreLineString);
+        } else if (topTenScores.size() < 10) {
+            // Less than ten scores have been recorded
+            StringBuilder sb = new StringBuilder();
+            for (int x = 0; x < topTenScores.size(); x ++) {
+                Score topScore = topTenScores.get(x);
+                String ordinal = Integer.toString(x + 1);
+                String date = ScoreManager.dateFormat.format(topScore.date);
+                String scoreLineString = ordinal + ". " + topScore.points + " points: " + topScore.name + ", " + date + "\n";
+                sb.append(scoreLineString);
+            }
+
+            String topScoresDisplay = sb.toString();
+            highScoreTextArea.setText(topScoresDisplay);
+
+        } else {
+            // There are ten or more scores in the topTenScores list
+            StringBuilder sb = new StringBuilder();
+            for (int x = 0; x < 10; x ++) {
+                Score topScore = topTenScores.get(x);
+                String ordinal = Integer.toString(x + 1);
+                String date = ScoreManager.dateFormat.format(topScore.date);
+
+                String scoreLineString = ordinal + ". " + topScore.points + " points: " + topScore.name + ", " + date + "\n";
+                sb.append(scoreLineString);
+            }
+
+            String topScoresDisplay = sb.toString();
+            highScoreTextArea.setText(topScoresDisplay);
         }
-        String topScoresDisplay = sb.toString();
-
-        highScoreTextArea.setText(topScoresDisplay);
     }
 
     public void newHighScore() {

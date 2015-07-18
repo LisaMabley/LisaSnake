@@ -158,6 +158,7 @@ public class SnakeGame {
 
 	protected static void displayGameOverGUI() {
 		// STEP 7: Display score & high scores in GameOver GUI
+		System.out.println("SnakeGame displaygameovergui method called");
 		snakeFrame.remove(snakePanel);
 
 		gameOverPanel = gameOverGUI.rootPanel;
