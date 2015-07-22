@@ -53,6 +53,7 @@ public class FoodManager {
                 for (Avocado avocado : avocados) {
                     // Update each avocado's ripeness
                     avocado.incrementRipeness();
+//                    System.out.println("Avocado at " + avocado.foodX + ", " + avocado.foodY + " value is " + GridSquares.getSquareValue(avocado.foodX, avocado.foodY));
 
                     if (avocado.age == avocado.maxAge) {
                         // Mark any that have reached max age for later removal

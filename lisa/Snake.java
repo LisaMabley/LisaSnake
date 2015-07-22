@@ -129,7 +129,7 @@ public class Snake {
 
 		for (int x = 0 ; x < GridSquares.maxX ; x++) {
 			for (int y = 0 ; y < GridSquares.maxY ; y++){
-				if (GridSquares.getSquareValue(x, y) != 0) {
+				if (GridSquares.getSquareValue(x, y) > 0) {
 					GridSquares.incrementSquareValue(x, y);
 				}
 			}
@@ -182,7 +182,7 @@ public class Snake {
 		}
 
 		// Does this make the snake eat its tail?
-		if (GridSquares.getSquareValue(snakeHeadX, snakeHeadY) != GridSquares.EMPTY) {
+		if (GridSquares.getSquareValue(snakeHeadX, snakeHeadY) > 0) {
 
 			ateTail = true;
 			// Then the game is over
@@ -214,7 +214,7 @@ public class Snake {
 
 		// Update last confirmed heading
 		lastHeading = currentHeading;
-	}
+    }
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

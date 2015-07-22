@@ -78,6 +78,7 @@ public class GameOverGUI {
         // instead of concatenating string in a loop
         if (topTenScores.isEmpty()) {
             // First high score has just been recorded
+            // TODO: format this date
             highScoreTextArea.setText("1. " + SnakeGame.currentScore.points + " points, " + SnakeGame.currentScore.date.toString());
 
         } else if (topTenScores.size() < 10) {
